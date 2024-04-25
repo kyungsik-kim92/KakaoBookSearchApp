@@ -4,7 +4,7 @@
     <array name="array_main_tab_text">
         <item>search</item>
         <item>favorite</item>
-        <item>setting</item>
+
 
 
     </array>
@@ -12,7 +12,7 @@
     <array name="array_main_tab_icon">
         <item>@drawable/baseline_search_24</item>
         <item>@drawable/baseline_favorite_24</item>
-        <item>@drawable/baseline_settings_24</item>
+
 
     </array>
 
