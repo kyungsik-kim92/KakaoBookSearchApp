@@ -3,6 +3,7 @@ package com.example.kakaobooksearchapp.network.response
 
 import android.os.Parcelable
 import androidx.room.Entity
+import com.example.kakaobooksearchapp.room.BookMarkItem
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -35,28 +36,28 @@ data class KakaoBookItem(
     val url: String,
     var isBookmark: Boolean = false
 ) : Parcelable {
-//    fun dateTime(): String {
-//        return datetime.substring(0 until 4)
-//    }
-//
-//    fun stringAuthors(): String {
-//        return authors.joinToString(", ")
-//    }
-//
-//
-//    fun toBookmarkItem() = BookMarkItem(
-//        authors = authors,
-//        contents = contents,
-//        datetime = datetime,
-//        isbn = isbn,
-//        price = price,
-//        publisher = publisher,
-//        salePrice = salePrice,
-//        status = status,
-//        thumbnail = thumbnail,
-//        title = title,
-//        translators = translators,
-//        url = url,
-//    )
+    fun dateTime(): String {
+        return datetime.substring(0 until 4)
+    }
+
+    fun stringAuthors(): String {
+        return authors.joinToString(", ")
+    }
+
+
+    fun toBookmarkItem() = BookMarkItem(
+        authors = authors,
+        contents = contents,
+        datetime = datetime,
+        isbn = isbn,
+        price = price,
+        publisher = publisher,
+        salePrice = salePrice,
+        status = status,
+        thumbnail = thumbnail,
+        title = title,
+        translators = translators,
+        url = url,
+    )
 
 }
