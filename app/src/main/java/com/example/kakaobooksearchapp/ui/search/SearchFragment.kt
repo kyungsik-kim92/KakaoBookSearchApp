@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp
+package com.example.kakaobooksearchapp.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
 import com.example.kakaobooksearchapp.adapter.SearchBookAdapter
 import com.example.kakaobooksearchapp.databinding.FragmentSearchBinding
 import com.example.kakaobooksearchapp.network.BookApiService

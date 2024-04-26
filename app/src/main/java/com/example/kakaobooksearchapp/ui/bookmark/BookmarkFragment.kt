@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp
+package com.example.kakaobooksearchapp.ui.bookmark
 
 import android.os.Bundle
 import android.view.LayoutInflater

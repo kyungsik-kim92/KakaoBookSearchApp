@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp
+package com.example.kakaobooksearchapp.ui.bookmark
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

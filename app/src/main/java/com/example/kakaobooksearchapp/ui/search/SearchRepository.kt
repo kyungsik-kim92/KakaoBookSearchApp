@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp
+package com.example.kakaobooksearchapp.ui.search
 
 import com.example.kakaobooksearchapp.network.BookApiService
 import com.example.kakaobooksearchapp.network.response.BookSearchData

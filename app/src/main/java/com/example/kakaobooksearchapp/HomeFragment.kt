@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.kakaobooksearchapp.adapter.FragmentPagerAdapter
 import com.example.kakaobooksearchapp.databinding.FragmentHomeBinding
+import com.example.kakaobooksearchapp.ui.bookmark.BookmarkFragment
+import com.example.kakaobooksearchapp.ui.search.SearchFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : Fragment() {

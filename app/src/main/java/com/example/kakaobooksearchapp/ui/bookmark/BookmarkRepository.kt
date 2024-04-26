@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp
+package com.example.kakaobooksearchapp.ui.bookmark
 
 import com.example.kakaobooksearchapp.room.BookMarkItem
 import com.example.kakaobooksearchapp.room.BookSearchDao
