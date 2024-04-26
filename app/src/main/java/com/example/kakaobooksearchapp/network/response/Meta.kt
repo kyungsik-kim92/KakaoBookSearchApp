@@ -1,4 +1,4 @@
-package com.example.kakaopractice.network.response
+package com.example.kakaobooksearchapp.network.response
 
 
 import com.google.gson.annotations.SerializedName

@@ -1,4 +1,4 @@
-package com.example.naverbooksearch.base
+package com.example.kakaobooksearchapp.base
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes

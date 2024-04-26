@@ -1,6 +1,8 @@
-package com.example.kakaopractice.network.response
+package com.example.kakaobooksearchapp.network.response
 
 
+import com.example.kakaobooksearchapp.network.response.KakaoBookItem
+import com.example.kakaobooksearchapp.network.response.Meta
 import com.google.gson.annotations.SerializedName
 
 data class BookSearchData(

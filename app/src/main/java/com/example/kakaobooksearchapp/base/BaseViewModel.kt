@@ -1,4 +1,4 @@
-package com.example.naverbooksearch.base
+package com.example.kakaobooksearchapp.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.Flow
