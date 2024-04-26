@@ -39,4 +39,10 @@ class BookmarkFragment() : Fragment() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        bookmarkViewModel.getFavoriteBooks()
+    }
+
+
 }
