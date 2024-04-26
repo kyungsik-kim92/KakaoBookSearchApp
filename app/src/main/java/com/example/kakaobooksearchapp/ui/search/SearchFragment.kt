@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
+import androidx.lifecycle.lifecycleScope
 import com.example.kakaobooksearchapp.adapter.SearchBookAdapter
 import com.example.kakaobooksearchapp.databinding.FragmentSearchBinding
 import com.example.kakaobooksearchapp.network.BookApiService
 import com.example.kakaobooksearchapp.room.BookSearchDatabase
+import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
 
@@ -25,6 +27,7 @@ class SearchFragment : Fragment() {
             viewModel.deleteBookMark(item)
         }
     )
+
 
     private val viewModel by viewModels<SearchViewModel> {
         val db = BookSearchDatabase.getInstance(requireContext())
@@ -51,8 +54,13 @@ class SearchFragment : Fragment() {
         viewModel.items.observe(viewLifecycleOwner) { items ->
             searchBookAdapter.submitList(items)
         }
-        viewModel.bookmarkItems.observe(viewLifecycleOwner) { bookmarkItems ->
-            searchBookAdapter.addBookmark(bookmarkItems)
+        viewModel.bookMarkItems.observe(viewLifecycleOwner) { isBookmark ->
+
+            if (isBookmark.result) {
+                searchBookAdapter.addBookmark(isBookmark.item)
+            } else {
+                searchBookAdapter.deleteBookmark(isBookmark.item)
+            }
 
         }
     }

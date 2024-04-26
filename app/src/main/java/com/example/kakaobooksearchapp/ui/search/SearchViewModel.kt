@@ -1,11 +1,13 @@
 package com.example.kakaobooksearchapp.ui.search
 
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.kakaobooksearchapp.IsBookmark
 import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
 import com.example.kakaobooksearchapp.network.response.KakaoBookItem
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +21,8 @@ class SearchViewModel(
     private val _items = MutableLiveData<List<KakaoBookItem>>()
     val items: LiveData<List<KakaoBookItem>> = _items
 
-    private val _bookmarkItems = MutableLiveData<KakaoBookItem>()
-    val bookmarkItems: LiveData<KakaoBookItem> = _bookmarkItems
+    private val _bookMarkItems = MutableLiveData<IsBookmark>()
+    val bookMarkItems: LiveData<IsBookmark> = _bookMarkItems
 
 
     val inputSearchLiveData = MutableLiveData("")
@@ -52,28 +54,17 @@ class SearchViewModel(
 
 
     fun addBookMark(item: KakaoBookItem) {
-
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val addBookmarkResult = bookmarkRepository.insertBook(item.toBookmarkItem())
-            if (addBookmarkResult >= 1L) {
-                _bookmarkItems.postValue(item)
-            }
-            else{
-                bookmarkRepository.deleteBook(item.toBookmarkItem())
-            }
+            _bookMarkItems.postValue(IsBookmark(addBookmarkResult >= 1L, item))
         }
     }
 
 
-
-
     fun deleteBookMark(item: KakaoBookItem) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val deleteBookmarkResult = bookmarkRepository.deleteBook(item.toBookmarkItem())
-            if (deleteBookmarkResult == 1) {
-                _bookmarkItems.value = item
-            }
-
+            _bookMarkItems.postValue(IsBookmark(deleteBookmarkResult == 1, item))
         }
     }
 
