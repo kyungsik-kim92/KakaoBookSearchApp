@@ -1,15 +1,14 @@
 package com.example.kakaobooksearchapp.ui.search
 
-import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.kakaobooksearchapp.IsBookmark
-import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
+import com.example.kakaobooksearchapp.BookmarkResult
 import com.example.kakaobooksearchapp.network.response.KakaoBookItem
+import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -21,8 +20,8 @@ class SearchViewModel(
     private val _items = MutableLiveData<List<KakaoBookItem>>()
     val items: LiveData<List<KakaoBookItem>> = _items
 
-    private val _bookMarkItems = MutableLiveData<IsBookmark>()
-    val bookMarkItems: LiveData<IsBookmark> = _bookMarkItems
+    private val _bookMarkItems = MutableLiveData<BookmarkResult>()
+    val bookMarkItems: LiveData<BookmarkResult> = _bookMarkItems
 
 
     val inputSearchLiveData = MutableLiveData("")
@@ -56,7 +55,12 @@ class SearchViewModel(
     fun addBookMark(item: KakaoBookItem) {
         viewModelScope.launch(Dispatchers.IO) {
             val addBookmarkResult = bookmarkRepository.insertBook(item.toBookmarkItem())
-            _bookMarkItems.postValue(IsBookmark(addBookmarkResult >= 1L, item))
+            _bookMarkItems.postValue(
+                BookmarkResult.AddBookmarkResult(
+                    addBookmarkResult >= 1L,
+                    item
+                )
+            )
         }
     }
 
@@ -64,7 +68,12 @@ class SearchViewModel(
     fun deleteBookMark(item: KakaoBookItem) {
         viewModelScope.launch(Dispatchers.IO) {
             val deleteBookmarkResult = bookmarkRepository.deleteBook(item.toBookmarkItem())
-            _bookMarkItems.postValue(IsBookmark(deleteBookmarkResult == 1, item))
+            _bookMarkItems.postValue(
+                BookmarkResult.DeleteBookmarkResult(
+                    deleteBookmarkResult == 1,
+                    item
+                )
+            )
         }
     }
 

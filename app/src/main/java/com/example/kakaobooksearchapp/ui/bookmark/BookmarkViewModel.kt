@@ -20,7 +20,7 @@ class BookmarkViewModel(private val bookmarkRepository: BookmarkRepository) : Vi
         getFavoriteBooks()
     }
 
-    private fun getFavoriteBooks() {
+     fun getFavoriteBooks() {
         viewModelScope.launch(Dispatchers.IO) {
             val bookmarkList = bookmarkRepository.getFavoriteBooks()
 

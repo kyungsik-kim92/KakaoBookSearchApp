@@ -44,7 +44,7 @@ class SearchBookAdapter(
         ) {
             binding.bookItem = kakaoBookItem
             binding.author.text = kakaoBookItem.authors.toString()
-
+            binding.bookmark.isChecked = statusCheckBox[adapterPosition]
             binding.bookmark.setOnClickListener {
 
                 if (!binding.bookmark.isChecked) {

@@ -1,12 +1,14 @@
 package com.example.kakaobooksearchapp.ui.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.kakaobooksearchapp.BookmarkResult
 import com.example.kakaobooksearchapp.adapter.SearchBookAdapter
 import com.example.kakaobooksearchapp.databinding.FragmentSearchBinding
 import com.example.kakaobooksearchapp.network.BookApiService
@@ -56,12 +58,10 @@ class SearchFragment : Fragment() {
         }
         viewModel.bookMarkItems.observe(viewLifecycleOwner) { isBookmark ->
 
-            if (isBookmark.result) {
-                searchBookAdapter.addBookmark(isBookmark.item)
-            } else {
-                searchBookAdapter.deleteBookmark(isBookmark.item)
+            when (isBookmark) {
+                is BookmarkResult.AddBookmarkResult -> searchBookAdapter.addBookmark(isBookmark.item)
+                is BookmarkResult.DeleteBookmarkResult ->searchBookAdapter.deleteBookmark(isBookmark.item)
             }
-
         }
     }
 }
