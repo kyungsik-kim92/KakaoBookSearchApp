@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kakaobooksearchapp.databinding.ItemSearchBinding
-import com.example.kakaopractice.network.response.KakaoBookItem
+import com.example.kakaobooksearchapp.network.response.KakaoBookItem
 
 class SearchBookAdapter :
     ListAdapter<KakaoBookItem, SearchBookAdapter.SearchViewHolder>(SearchDiffCallback()) {
 
+    private val kakaoBookList = mutableListOf<KakaoBookItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder(
@@ -29,12 +30,14 @@ class SearchBookAdapter :
 
     class SearchViewHolder(private val binding: ItemSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: KakaoBookItem) {
-
+        fun bind(kakaoBookItem: KakaoBookItem) {
+            binding.bookItem = kakaoBookItem
+            binding.author.text = kakaoBookItem.authors.toString()
         }
 
 
     }
+
 
 }
 
