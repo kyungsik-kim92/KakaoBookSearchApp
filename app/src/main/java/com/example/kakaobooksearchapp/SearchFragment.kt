@@ -9,15 +9,27 @@ import androidx.fragment.app.viewModels
 import com.example.kakaobooksearchapp.adapter.SearchBookAdapter
 import com.example.kakaobooksearchapp.databinding.FragmentSearchBinding
 import com.example.kakaobooksearchapp.network.BookApiService
+import com.example.kakaobooksearchapp.room.BookSearchDatabase
 
-class SearchFragment: Fragment() {
+class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
-    private val searchBookAdapter = SearchBookAdapter()
 
-    private val viewModel by viewModels<SearchViewModel>{
-        val repository = SearchRepository(BookApiService.create())
-        SearchViewModel.provideFactory(repository)
+
+    private val searchBookAdapter = SearchBookAdapter(
+        onBookmarkInsertClick = { item ->
+            viewModel.addBookMark(item)
+        },
+        onBookmarkDeleteClick = { item ->
+            viewModel.deleteBookMark(item)
+        }
+    )
+
+    private val viewModel by viewModels<SearchViewModel> {
+        val db = BookSearchDatabase.getInstance(requireContext())
+        val searchRepository = SearchRepository(BookApiService.create())
+        val bookmarkRepository = BookmarkRepository(db.bookSearchDao())
+        SearchViewModel.provideFactory(searchRepository, bookmarkRepository)
     }
 
     override fun onCreateView(
@@ -34,10 +46,13 @@ class SearchFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = this.viewModel
         binding.rvSearchResult.adapter = searchBookAdapter
-        viewModel.items.observe(viewLifecycleOwner){items ->
+
+        viewModel.items.observe(viewLifecycleOwner) { items ->
             searchBookAdapter.submitList(items)
         }
+        viewModel.bookmarkItems.observe(viewLifecycleOwner) { bookmarkItems ->
+            searchBookAdapter.addBookmark(bookmarkItems)
 
+        }
     }
-
 }
