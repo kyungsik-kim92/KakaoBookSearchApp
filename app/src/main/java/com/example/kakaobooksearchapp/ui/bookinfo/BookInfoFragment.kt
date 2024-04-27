@@ -30,8 +30,34 @@ class BookInfoFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initWebView()
+
+        bookInfoViewModel.bookMarkItems.observe(viewLifecycleOwner) { isBookmark ->
+            when (isBookmark) {
+                is BookmarkResult.AddBookmarkResult -> {
+                    if (isBookmark.result) {
+                        Snackbar.make(requireView(), "북마크에 추가 되었습니다.", Snackbar.LENGTH_SHORT).show()
+                        BookmarkViewState.AddBookmark(isBookmark.item)
+                    } else {
+                        Snackbar.make(requireView(), "북마크에 추가를 실패하였습니다.", Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+
+                is BookmarkResult.DeleteBookmarkResult -> {
+                    if (isBookmark.result) {
+                        Snackbar.make(requireView(), "북마크에 해제 되었습니다.", Snackbar.LENGTH_SHORT).show()
+                        BookmarkViewState.DeleteBookmark(isBookmark.item)
+                    } else {
+                        Snackbar.make(requireView(), "북마크에 해제를 실패하였습니다.", Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        }
 
     }
 
