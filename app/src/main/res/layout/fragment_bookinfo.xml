@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="bookItem"
+            type="com.example.kakaobooksearchapp.network.response.KakaoBookItem" />
+
+        <variable
+            name="viewModel"
+            type="com.example.kakaobooksearchapp.ui.bookinfo.BookInfoViewModel" />
 
     </data>
 
@@ -18,7 +25,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadUrl="@{bookItem.url}"/>
 
 
         <CheckBox
@@ -30,6 +38,8 @@
             android:background="@drawable/btn_star"
             android:backgroundTint="#d070fb"
             android:button="@null"
+            android:checked="@={viewModel.isBookmark()}"
+            android:onCheckedChanged="@{(_, isChecked) -> viewModel.onCheckedChanged(isChecked)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
