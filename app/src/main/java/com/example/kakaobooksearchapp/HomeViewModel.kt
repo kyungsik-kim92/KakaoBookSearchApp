@@ -1,10 +1,21 @@
 package com.example.kakaobooksearchapp
 
-import com.example.kakaobooksearchapp.base.BaseViewModel
-import com.example.kakaobooksearchapp.base.ViewEvent
-import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.kakaobooksearchapp.network.response.KakaoBookItem
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
-class HomeViewModel : BaseViewModel() {
-    override val uiEvent: Flow<ViewEvent>
-        get() = TODO("Not yet implemented")
+class HomeViewModel() : ViewModel() {
+
+    val routeBookItem = MutableLiveData<KakaoBookItem>()
+    fun routeBookInfo(item: KakaoBookItem) {
+        viewModelScope.launch(IO) {
+            routeBookItem.postValue(item)
+
+        }
+    }
+
 }
+
