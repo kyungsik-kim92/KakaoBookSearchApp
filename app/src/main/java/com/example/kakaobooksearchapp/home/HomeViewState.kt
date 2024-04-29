@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp
+package com.example.kakaobooksearchapp.home
 
 import com.example.kakaobooksearchapp.base.ViewState
 import com.example.kakaobooksearchapp.network.response.KakaoBookItem
