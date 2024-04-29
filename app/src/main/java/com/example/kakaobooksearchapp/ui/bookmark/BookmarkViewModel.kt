@@ -7,11 +7,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.kakaobooksearchapp.room.BookMarkItem
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class BookmarkViewModel(private val bookmarkRepository: BookmarkRepository) : ViewModel() {
+@HiltViewModel
+class BookmarkViewModel @Inject constructor(private val bookmarkRepository: BookmarkRepository) : ViewModel() {
     private val _items = MutableLiveData<List<BookMarkItem>>()
     val items: LiveData<List<BookMarkItem>> = _items
 
@@ -30,17 +33,6 @@ class BookmarkViewModel(private val bookmarkRepository: BookmarkRepository) : Vi
         }
 
 
-    }
-
-
-    companion object {
-        fun provideFactory(
-            bookmarkRepository: BookmarkRepository
-        ) = viewModelFactory {
-            initializer {
-                BookmarkViewModel(bookmarkRepository)
-            }
-        }
     }
 
 }

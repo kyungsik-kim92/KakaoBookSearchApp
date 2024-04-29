@@ -9,15 +9,15 @@ import androidx.fragment.app.viewModels
 import com.example.kakaobooksearchapp.adapter.BookmarkAdapter
 import com.example.kakaobooksearchapp.databinding.FragmentBookmarkBinding
 import com.example.kakaobooksearchapp.room.BookSearchDatabase
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class BookmarkFragment() : Fragment() {
     private lateinit var binding: FragmentBookmarkBinding
 
-    private val bookmarkViewModel by viewModels<BookmarkViewModel> {
-        val db = BookSearchDatabase.getInstance(requireContext())
-        val bookmarkRepository = BookmarkRepository(db.bookSearchDao())
-        BookmarkViewModel.provideFactory(bookmarkRepository)
-    }
+    private val bookmarkViewModel by viewModels<BookmarkViewModel>()
+
     private val bookmarkAdapter = BookmarkAdapter()
 
     override fun onCreateView(

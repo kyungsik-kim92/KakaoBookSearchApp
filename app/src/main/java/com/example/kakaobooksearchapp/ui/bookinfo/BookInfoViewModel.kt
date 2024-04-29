@@ -12,11 +12,14 @@ import com.example.kakaobooksearchapp.BookmarkResult
 import com.example.kakaobooksearchapp.network.response.KakaoBookItem
 import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
 import com.example.kakaobooksearchapp.ui.bookmark.BookmarkViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class BookInfoViewModel(
+@HiltViewModel
+class BookInfoViewModel @Inject constructor(
     savedStateHandle : SavedStateHandle,
     private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
@@ -73,17 +76,6 @@ class BookInfoViewModel(
     sealed class BookmarkViewState  {
         data class AddBookmark(val item: KakaoBookItem) : BookmarkViewState()
         data class DeleteBookmark(val item: KakaoBookItem) : BookmarkViewState()
-    }
-
-    companion object {
-        fun provideFactory(
-            bookmarkRepository: BookmarkRepository,
-            savedStateHandle: SavedStateHandle
-        ) = viewModelFactory {
-            initializer {
-                BookmarkViewModel(bookmarkRepository)
-            }
-        }
     }
 
 

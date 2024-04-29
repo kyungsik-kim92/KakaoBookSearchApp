@@ -9,10 +9,14 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.kakaobooksearchapp.BookmarkResult
 import com.example.kakaobooksearchapp.network.response.KakaoBookItem
 import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel(
+
+@HiltViewModel
+class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository,
     private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
@@ -83,17 +87,5 @@ class SearchViewModel(
         private const val DEFAULT_SEARCH_PAGE = 1
         private const val DEFAULT_SEARCH_SIZE = 30
 
-
-        fun provideFactory(
-            searchRepository: SearchRepository,
-            bookmarkRepository: BookmarkRepository
-        ) = viewModelFactory {
-            initializer {
-                SearchViewModel(searchRepository, bookmarkRepository)
-            }
-        }
-
     }
-
-
 }

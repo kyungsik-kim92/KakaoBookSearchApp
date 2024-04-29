@@ -2,6 +2,7 @@ package com.example.kakaobooksearchapp.ui.bookinfo
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,31 +13,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kakaobooksearchapp.BookmarkResult
 import com.example.kakaobooksearchapp.databinding.FragmentBookinfoBinding
-import com.example.kakaobooksearchapp.room.BookSearchDatabase
 import com.example.kakaobooksearchapp.ui.bookinfo.BookInfoViewModel.BookmarkViewState
-import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
-import com.example.kakaobooksearchapp.util.BookInfoViewModelFactory
 import com.example.kakaobooksearchapp.util.WebViewOnBackPressedCallback
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BookInfoFragment : Fragment() {
     private lateinit var binding: FragmentBookinfoBinding
 
 
-    private val bookInfoViewModel: BookInfoViewModel by viewModels(
-
-        factoryProducer = {
-            val db = BookSearchDatabase.getInstance(requireContext())
-            val bookmarkRepository = BookmarkRepository(db.bookSearchDao())
-            BookInfoViewModelFactory(bookmarkRepository)
-        }
-    )
-
-
-
-
+    private val bookInfoViewModel: BookInfoViewModel by viewModels()
     private val args by navArgs<BookInfoFragmentArgs>()
-
 
 
     override fun onCreateView(
@@ -47,12 +35,16 @@ class BookInfoFragment : Fragment() {
         binding = FragmentBookinfoBinding.inflate(inflater, container, false)
         return binding.root
 
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initWebView()
+
+        Log.d("tag", "restart")
+
         binding.viewModel = this.bookInfoViewModel
 
 
@@ -66,6 +58,7 @@ class BookInfoFragment : Fragment() {
                         Snackbar.make(requireView(), "북마크에 추가를 실패하였습니다.", Snackbar.LENGTH_SHORT)
                             .show()
                     }
+                    Log.d("Back", "눌림1")
                 }
 
                 is BookmarkResult.DeleteBookmarkResult -> {
@@ -76,6 +69,7 @@ class BookInfoFragment : Fragment() {
                         Snackbar.make(requireView(), "북마크에 해제를 실패하였습니다.", Snackbar.LENGTH_SHORT)
                             .show()
                     }
+                    Log.d("Back", "눌림2")
                 }
             }
         }

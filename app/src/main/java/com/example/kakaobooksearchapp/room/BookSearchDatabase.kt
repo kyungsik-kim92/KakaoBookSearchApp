@@ -21,9 +21,9 @@ abstract class BookSearchDatabase : RoomDatabase() {
 
 
 
-    companion object {
-        fun getInstance(context: Context): BookSearchDatabase {
-            return Room.databaseBuilder(context, BookSearchDatabase::class.java, "favorite-books").build()
-        }
-    }
+//    companion object {
+//        fun getInstance(context: Context): BookSearchDatabase {
+//            return Room.databaseBuilder(context, BookSearchDatabase::class.java, "favorite-books").build()
+//        }
+//    }
 }
