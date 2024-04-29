@@ -14,34 +14,23 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor() : ViewModel() {
 
-//    val routeBookItem = MutableLiveData<KakaoBookItem>()
-//    fun routeBookInfo(item: KakaoBookItem) {
-//        viewModelScope.launch(IO) {
-//            routeBookItem.postValue(item)
-//
-//        }
-//    }
+
 
     private val _viewStateLiveData = MutableLiveData<HomeViewState>()
     val viewStateLiveData: LiveData<HomeViewState> = _viewStateLiveData
-fun onChangedViewState(viewState: HomeViewState) {
-    viewModelScope.launch {
-        _viewStateLiveData.value = viewState
+    fun onChangedViewState(viewState: HomeViewState) {
+        viewModelScope.launch {
+            _viewStateLiveData.value = viewState
 
+        }
     }
-}
 
     fun routeBookInfo(item: KakaoBookItem) {
         onChangedViewState(HomeViewState.RouteBookInfo(item))
     }
 
 
-}
-
-
-
-
-sealed class HomeViewState {
-    data class RouteBookInfo(val item: KakaoBookItem) : HomeViewState()
 
 }
+
+

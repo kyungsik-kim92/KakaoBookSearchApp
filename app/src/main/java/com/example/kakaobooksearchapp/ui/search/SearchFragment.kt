@@ -1,25 +1,21 @@
 package com.example.kakaobooksearchapp.ui.search
 
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.kakaobooksearchapp.BookmarkResult
 import com.example.kakaobooksearchapp.HomeViewModel
+import com.example.kakaobooksearchapp.R
 import com.example.kakaobooksearchapp.adapter.SearchBookAdapter
+import com.example.kakaobooksearchapp.base.BaseFragment
+import com.example.kakaobooksearchapp.base.ViewEvent
+import com.example.kakaobooksearchapp.base.ViewState
 import com.example.kakaobooksearchapp.databinding.FragmentSearchBinding
-import com.example.kakaobooksearchapp.network.BookApiService
-import com.example.kakaobooksearchapp.room.BookSearchDatabase
-import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
-    private lateinit var binding: FragmentSearchBinding
+
+    override val viewModel by viewModels<SearchViewModel>()
     private val homeViewModel by viewModels<HomeViewModel>(
         ownerProducer = { requireParentFragment() }
     )
@@ -30,41 +26,49 @@ class SearchFragment : Fragment() {
             homeViewModel.routeBookInfo(it)
         },
         onBookmarkInsertClick = { item ->
-            searchViewModel.addBookMark(item)
+            viewModel.addBookMark(item)
         },
         onBookmarkDeleteClick = { item ->
-            searchViewModel.deleteBookMark(item)
+            viewModel.deleteBookMark(item)
         }
     )
 
 
-    private val searchViewModel by viewModels<SearchViewModel>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = this@SearchFragment.searchViewModel
+    override fun initUi() {
         binding.rvSearchResult.adapter = searchBookAdapter
 
-        searchViewModel.items.observe(viewLifecycleOwner) { items ->
-            searchBookAdapter.submitList(items)
-            Log.d("submit","재실행")
-        }
-        searchViewModel.bookMarkItems.observe(viewLifecycleOwner) { isBookmark ->
+    }
 
-            when (isBookmark) {
-                is BookmarkResult.AddBookmarkResult -> searchBookAdapter.addBookmark(isBookmark.item)
-                is BookmarkResult.DeleteBookmarkResult ->searchBookAdapter.deleteBookmark(isBookmark.item)
+    override fun onChangedViewState(state: ViewState) {
+        when (state) {
+            is SearchViewState.GetSearchResult -> {
+                searchBookAdapter.submitList(state.list)
+            }
+
+            is SearchViewState.AddBookmarkResult -> {
+                if (state.result) {
+                    Snackbar.make(requireView(), "북마크에 추가 되었습니다.", Snackbar.LENGTH_SHORT).show()
+                    searchBookAdapter.addBookmark(state.item)
+                } else {
+                    Snackbar.make(requireView(), "북마크에 추가를 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
+                }
+
+            }
+
+            is SearchViewState.DeleteBookmarkResult -> {
+                if (state.result) {
+                    Snackbar.make(requireView(), "북마크에 해제 되었습니다.", Snackbar.LENGTH_SHORT).show()
+                    searchBookAdapter.deleteBookmark(state.item)
+                } else {
+                    Snackbar.make(requireView(), "북마크에 해제를 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
     }
+
+    override fun onChangeViewEvent(event: ViewEvent) {
+
+    }
+
+
 }

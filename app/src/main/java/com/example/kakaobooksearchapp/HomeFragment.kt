@@ -14,7 +14,9 @@ import com.example.kakaobooksearchapp.network.response.KakaoBookItem
 import com.example.kakaobooksearchapp.ui.bookmark.BookmarkFragment
 import com.example.kakaobooksearchapp.ui.search.SearchFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
@@ -53,12 +55,25 @@ class HomeFragment : Fragment() {
             viewPager.adapter = pageAdapter
             TabLayoutMediator(tabLayout, viewPager, tabConfigurationStrategy).attach()
         }
-        homeViewModel.routeBookItem.observe(viewLifecycleOwner) { routeBookInfo ->
-            val action = HomeFragmentDirections.actionHomeFragmentToBookInfoFragment(routeBookInfo)
-            findNavController().navigate(action)
+//        homeViewModel.routeBookItem.observe(viewLifecycleOwner) { routeBookInfo ->
+//            val action = HomeFragmentDirections.actionHomeFragmentToBookInfoFragment(routeBookInfo)
+//            findNavController().navigate(action)
+//
+//        }
+        homeViewModel.viewStateLiveData.observe(viewLifecycleOwner){
+            onChangedViewState(it)
         }
 
-    }
 
+    }
+    fun onChangedViewState(viewState: HomeViewState) {
+        when(viewState){
+            is HomeViewState.RouteBookInfo -> {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToBookInfoFragment(viewState.item)
+                findNavController().navigate(action)
+            }
+        }
+    }
 
 }

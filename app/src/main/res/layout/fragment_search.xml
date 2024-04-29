@@ -31,7 +31,7 @@
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.inputSearchLiveData}" />
+                android:text="@={viewModel.inputSearchStateFlow}" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
