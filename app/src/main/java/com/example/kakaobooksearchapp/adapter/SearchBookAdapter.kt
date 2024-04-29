@@ -12,6 +12,7 @@ import com.example.kakaobooksearchapp.network.response.KakaoBookItem
 import com.google.android.material.snackbar.Snackbar
 
 class SearchBookAdapter(
+    val onItemClick: (KakaoBookItem) -> Unit,
     val onBookmarkInsertClick: (KakaoBookItem) -> Unit,
     val onBookmarkDeleteClick: (KakaoBookItem) -> Unit,
 ) :
@@ -29,7 +30,7 @@ class SearchBookAdapter(
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(getItem(position), onBookmarkInsertClick, onBookmarkDeleteClick)
+        holder.bind(getItem(position), onItemClick, onBookmarkInsertClick, onBookmarkDeleteClick)
     }
 
     class SearchViewHolder(
@@ -39,6 +40,7 @@ class SearchBookAdapter(
         private val statusCheckBox = SparseBooleanArray()
         fun bind(
             kakaoBookItem: KakaoBookItem,
+            onItemClick: (KakaoBookItem) -> Unit,
             onBookMarkInsertClick: (KakaoBookItem) -> Unit,
             onBookMarkDeleteClick: (KakaoBookItem) -> Unit
         ) {
@@ -60,7 +62,10 @@ class SearchBookAdapter(
 
                 }
             }
+            itemView.setOnClickListener {
+                onItemClick(kakaoBookItem)
 
+            }
 
         }
 

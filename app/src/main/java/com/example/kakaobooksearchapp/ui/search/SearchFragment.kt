@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.kakaobooksearchapp.BookmarkResult
+import com.example.kakaobooksearchapp.HomeViewModel
 import com.example.kakaobooksearchapp.adapter.SearchBookAdapter
 import com.example.kakaobooksearchapp.databinding.FragmentSearchBinding
 import com.example.kakaobooksearchapp.network.BookApiService
@@ -19,9 +20,15 @@ import kotlinx.coroutines.launch
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
+    private val homeViewModel by viewModels<HomeViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
 
 
     private val searchBookAdapter = SearchBookAdapter(
+        onItemClick = {
+            homeViewModel.routeBookInfo(it)
+        },
         onBookmarkInsertClick = { item ->
             viewModel.addBookMark(item)
         },
@@ -50,7 +57,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = this.viewModel
+        binding.viewModel = this@SearchFragment.viewModel
         binding.rvSearchResult.adapter = searchBookAdapter
 
         viewModel.items.observe(viewLifecycleOwner) { items ->
