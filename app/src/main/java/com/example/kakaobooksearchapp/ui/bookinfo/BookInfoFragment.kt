@@ -12,14 +12,32 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kakaobooksearchapp.BookmarkResult
 import com.example.kakaobooksearchapp.databinding.FragmentBookinfoBinding
+import com.example.kakaobooksearchapp.room.BookSearchDatabase
+import com.example.kakaobooksearchapp.ui.bookinfo.BookInfoViewModel.BookmarkViewState
+import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
+import com.example.kakaobooksearchapp.util.BookInfoViewModelFactory
 import com.example.kakaobooksearchapp.util.WebViewOnBackPressedCallback
 import com.google.android.material.snackbar.Snackbar
-import com.example.kakaobooksearchapp.ui.bookinfo.BookInfoViewModel.BookmarkViewState
 
 class BookInfoFragment : Fragment() {
     private lateinit var binding: FragmentBookinfoBinding
-    private val bookInfoViewModel by viewModels<BookInfoViewModel>()
+
+
+    private val bookInfoViewModel: BookInfoViewModel by viewModels(
+
+        factoryProducer = {
+            val db = BookSearchDatabase.getInstance(requireContext())
+            val bookmarkRepository = BookmarkRepository(db.bookSearchDao())
+            BookInfoViewModelFactory(bookmarkRepository)
+        }
+    )
+
+
+
+
     private val args by navArgs<BookInfoFragmentArgs>()
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,12 +46,15 @@ class BookInfoFragment : Fragment() {
     ): View {
         binding = FragmentBookinfoBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initWebView()
+        binding.viewModel = this.bookInfoViewModel
+
 
         bookInfoViewModel.bookMarkItems.observe(viewLifecycleOwner) { isBookmark ->
             when (isBookmark) {

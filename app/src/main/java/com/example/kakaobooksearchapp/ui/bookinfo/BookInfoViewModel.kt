@@ -6,23 +6,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.kakaobooksearchapp.BookmarkResult
 import com.example.kakaobooksearchapp.network.response.KakaoBookItem
 import com.example.kakaobooksearchapp.ui.bookmark.BookmarkRepository
+import com.example.kakaobooksearchapp.ui.bookmark.BookmarkViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class BookInfoViewModel(
-    private val bookmarkRepository: BookmarkRepository, savedStateHandle: SavedStateHandle
+    savedStateHandle : SavedStateHandle,
+    private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
 
     private val _bookMarkItems = MutableLiveData<BookmarkResult>()
     val bookMarkItems: LiveData<BookmarkResult> = _bookMarkItems
-
-    private val addBookState = MutableLiveData<KakaoBookItem>()
-    private val deleteBookState = MutableLiveData<KakaoBookItem>()
-
 
     private val kakaoBookItem = savedStateHandle.get<KakaoBookItem>("item")
 
@@ -73,6 +73,17 @@ class BookInfoViewModel(
     sealed class BookmarkViewState  {
         data class AddBookmark(val item: KakaoBookItem) : BookmarkViewState()
         data class DeleteBookmark(val item: KakaoBookItem) : BookmarkViewState()
+    }
+
+    companion object {
+        fun provideFactory(
+            bookmarkRepository: BookmarkRepository,
+            savedStateHandle: SavedStateHandle
+        ) = viewModelFactory {
+            initializer {
+                BookmarkViewModel(bookmarkRepository)
+            }
+        }
     }
 
 
