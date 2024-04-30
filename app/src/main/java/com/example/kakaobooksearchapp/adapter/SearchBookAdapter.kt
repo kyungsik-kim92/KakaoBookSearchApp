@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.model.KakaoBook
 import com.example.kakaobooksearchapp.databinding.ItemSearchBinding
-import com.example.kakaobooksearchapp.network.response.KakaoBookItem
 import com.google.android.material.snackbar.Snackbar
 
 class SearchBookAdapter(
-    val onItemClick: (KakaoBookItem) -> Unit,
-    val onBookmarkInsertClick: (KakaoBookItem) -> Unit,
-    val onBookmarkDeleteClick: (KakaoBookItem) -> Unit,
+    val onItemClick: (KakaoBook) -> Unit,
+    val onBookmarkInsertClick: (KakaoBook) -> Unit,
+    val onBookmarkDeleteClick: (KakaoBook) -> Unit,
 ) :
-    ListAdapter<KakaoBookItem, SearchBookAdapter.SearchViewHolder>(SearchDiffCallback()) {
-    private val kakaoBookList = mutableListOf<KakaoBookItem>()
+    ListAdapter<KakaoBook, SearchBookAdapter.SearchViewHolder>(SearchDiffCallback()) {
+    private val kakaoBookList = mutableListOf<KakaoBook>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder(
@@ -39,10 +39,10 @@ class SearchBookAdapter(
         RecyclerView.ViewHolder(binding.root) {
         private val statusCheckBox = SparseBooleanArray()
         fun bind(
-            kakaoBookItem: KakaoBookItem,
-            onItemClick: (KakaoBookItem) -> Unit,
-            onBookMarkInsertClick: (KakaoBookItem) -> Unit,
-            onBookMarkDeleteClick: (KakaoBookItem) -> Unit
+            kakaoBookItem: KakaoBook,
+            onItemClick: (KakaoBook) -> Unit,
+            onBookMarkInsertClick: (KakaoBook) -> Unit,
+            onBookMarkDeleteClick: (KakaoBook) -> Unit
         ) {
             binding.bookItem = kakaoBookItem
             binding.author.text = kakaoBookItem.authors.toString()
@@ -71,7 +71,7 @@ class SearchBookAdapter(
 
     }
 
-    fun addBookmark(item: KakaoBookItem) {
+    fun addBookmark(item: KakaoBook) {
         if (kakaoBookList.contains(item)) {
             val position = kakaoBookList.indexOf(item)
             kakaoBookList[position].isBookmark = true
@@ -79,7 +79,7 @@ class SearchBookAdapter(
         }
     }
 
-    fun deleteBookmark(item: KakaoBookItem) {
+    fun deleteBookmark(item: KakaoBook) {
         if (kakaoBookList.contains(item)) {
             val position = kakaoBookList.indexOf(item)
             kakaoBookList[position].isBookmark = false
@@ -89,12 +89,12 @@ class SearchBookAdapter(
 }
 
 
-class SearchDiffCallback : DiffUtil.ItemCallback<KakaoBookItem>() {
-    override fun areItemsTheSame(oldItem: KakaoBookItem, newItem: KakaoBookItem): Boolean {
+class SearchDiffCallback : DiffUtil.ItemCallback<KakaoBook>() {
+    override fun areItemsTheSame(oldItem: KakaoBook, newItem: KakaoBook): Boolean {
         return oldItem.isbn == newItem.isbn
     }
 
-    override fun areContentsTheSame(oldItem: KakaoBookItem, newItem: KakaoBookItem): Boolean {
+    override fun areContentsTheSame(oldItem: KakaoBook, newItem: KakaoBook): Boolean {
         return oldItem == newItem
     }
 }
