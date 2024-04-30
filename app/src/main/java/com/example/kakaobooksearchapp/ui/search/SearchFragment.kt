@@ -1,7 +1,7 @@
 package com.example.kakaobooksearchapp.ui.search
 
 import androidx.fragment.app.viewModels
-import com.example.kakaobooksearchapp.HomeViewModel
+import com.example.kakaobooksearchapp.home.HomeViewModel
 import com.example.kakaobooksearchapp.R
 import com.example.kakaobooksearchapp.adapter.SearchBookAdapter
 import com.example.kakaobooksearchapp.base.BaseFragment

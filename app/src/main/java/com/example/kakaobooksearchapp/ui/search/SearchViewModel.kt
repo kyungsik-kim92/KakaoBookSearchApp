@@ -1,26 +1,22 @@
 package com.example.kakaobooksearchapp.ui.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.example.kakaobooksearchapp.BookmarkResult
-import com.example.kakaobooksearchapp.MainViewState
 import com.example.kakaobooksearchapp.base.BaseViewModel
+import com.example.kakaobooksearchapp.data.repo.BookmarkRepository
 import com.example.kakaobooksearchapp.data.repo.SearchRepository
 import com.example.kakaobooksearchapp.network.response.KakaoBookItem
-import com.example.kakaobooksearchapp.data.repo.BookmarkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val searchRepository: SearchRepository,
     private val bookmarkRepository: BookmarkRepository
 ) : BaseViewModel() {
