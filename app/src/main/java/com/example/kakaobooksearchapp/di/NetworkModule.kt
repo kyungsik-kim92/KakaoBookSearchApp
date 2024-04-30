@@ -1,7 +1,7 @@
 package com.example.kakaobooksearchapp.di
 
-import com.example.kakaobooksearchapp.constants.KakaoConstants
-import com.example.kakaobooksearchapp.network.BookApiService
+import com.example.data.api.KakaoApiService
+import com.example.data.api.KakaoApiService.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,14 +18,14 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
-            .baseUrl(KakaoConstants.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
 
     @Provides
     @Singleton
-    fun provideBookApiService(retrofit: Retrofit): BookApiService =
-        retrofit.create(BookApiService::class.java)
+    fun provideBookApiService(retrofit: Retrofit): KakaoApiService =
+        retrofit.create(KakaoApiService::class.java)
 
 }

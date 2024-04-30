@@ -1,11 +1,11 @@
 package com.example.kakaobooksearchapp.di
 
-import com.example.kakaobooksearchapp.network.BookApiService
-import com.example.kakaobooksearchapp.room.BookSearchDao
-import com.example.kakaobooksearchapp.data.repo.BookmarkRepository
-import com.example.kakaobooksearchapp.data.repo.BookmarkRepositoryImpl
-import com.example.kakaobooksearchapp.data.repo.SearchRepository
-import com.example.kakaobooksearchapp.data.repo.SearchRepositoryImpl
+import com.example.data.api.KakaoApiService
+import com.example.data.repo.KakaoBookmarkRepositoryImpl
+import com.example.data.repo.KakaoSearchRepositoryImpl
+import com.example.data.room.BookSearchDao
+import com.example.domain.repo.KakaoBookmarkRepository
+import com.example.domain.repo.KakaoSearchRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,13 +19,13 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideBookRepository(bookApiService: BookApiService): SearchRepository =
-        SearchRepositoryImpl(bookApiService)
+    fun provideBookRepository(kakaoApiService: KakaoApiService): KakaoSearchRepository =
+        KakaoSearchRepositoryImpl(kakaoApiService)
 
 
     @Provides
     @Singleton
-    fun provideBookMarkRepository(bookSearchDao: BookSearchDao): BookmarkRepository =
-        BookmarkRepositoryImpl(bookSearchDao)
+    fun provideBookMarkRepository(bookSearchDao: BookSearchDao): KakaoBookmarkRepository =
+        KakaoBookmarkRepositoryImpl(bookSearchDao)
 
 }
