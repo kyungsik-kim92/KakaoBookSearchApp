@@ -5,7 +5,7 @@
     <data>
         <variable
             name="bookItem"
-            type="com.example.kakaobooksearchapp.network.response.KakaoBookItem" />
+            type="com.example.domain.model.KakaoBook" />
 
         <variable
             name="viewModel"

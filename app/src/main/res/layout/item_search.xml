@@ -9,7 +9,7 @@
 
         <variable
             name="bookItem"
-            type="com.example.kakaobooksearchapp.network.response.KakaoBookItem" />
+            type="com.example.domain.model.KakaoBook" />
     </data>
 
     <androidx.cardview.widget.CardView
