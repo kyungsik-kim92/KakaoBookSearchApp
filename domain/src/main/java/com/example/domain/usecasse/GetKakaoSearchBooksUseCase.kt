@@ -1,17 +1,16 @@
 package com.example.domain.usecasse
 
-import com.example.domain.repo.SearchRepository
+import com.example.domain.repo.KakaoSearchRepository
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import javax.inject.Inject
 
-class GetKakaoSearchBooksUseCase(private val kakaRepository: SearchRepository) {
 
+class GetKakaoSearchBooksUseCase @Inject constructor(private val kakaoSearchRepository: KakaoSearchRepository) {
     operator fun invoke(
         query: String,
         sort: String,
         page: Int,
         size: Int,
-    ) = flow { emit(kakaRepository.searchBooks(query, sort, page, size)) }
-
+    ) = flow { emit(kakaoSearchRepository.searchBooks(query, sort, page, size)) }
 
 }
