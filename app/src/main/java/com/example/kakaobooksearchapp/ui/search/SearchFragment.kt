@@ -26,10 +26,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             homeViewModel.routeBookInfo(it)
         },
         onBookmarkInsertClick = { item ->
-            viewModel.addBookMark(item)
+//            viewModel.addBookMark(item)
         },
         onBookmarkDeleteClick = { item ->
-            viewModel.deleteBookMark(item)
+//            viewModel.deleteBookMark(item)
         }
     )
 

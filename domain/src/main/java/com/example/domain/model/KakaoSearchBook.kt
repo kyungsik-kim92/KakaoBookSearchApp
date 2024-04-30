@@ -20,10 +20,27 @@ data class KakaoBook(
     val translators: List<String>,
     val url: String,
     var isBookmark: Boolean = false
-)
+){
+    fun toBookmarkItem() = KakaoBookmark(
+        authors = authors,
+        contents = contents,
+        datetime = datetime,
+        isbn = isbn,
+        price = price,
+        publisher = publisher,
+        salePrice = salePrice,
+        status = status,
+        thumbnail = thumbnail,
+        title = title,
+        translators = translators,
+        url = url,
+    )
+}
 
 data class KakaoSearchMeta(
     val isEnd: Boolean,
     val pageableCount: Int,
     val totalCount: Int
 )
+
+
