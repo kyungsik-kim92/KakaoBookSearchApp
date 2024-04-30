@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp.util
+package com.example.data.util
 
 import android.webkit.WebView
 import androidx.activity.OnBackPressedCallback

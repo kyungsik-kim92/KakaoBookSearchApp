@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp.util
+package com.example.data.util
 
 import androidx.room.TypeConverter
 import kotlinx.serialization.decodeFromString
