@@ -1,8 +1,8 @@
 package com.example.kakaobooksearchapp.home
 
 import androidx.lifecycle.viewModelScope
+import com.example.domain.model.KakaoBook
 import com.example.kakaobooksearchapp.base.BaseViewModel
-import com.example.kakaobooksearchapp.network.response.KakaoBookItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -11,7 +11,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor() : BaseViewModel() {
 
 
-    fun routeBookInfo(item: KakaoBookItem) {
+    fun routeBookInfo(item: KakaoBook) {
         viewModelScope.launch {
             onChangedViewState(HomeViewState.RouteBookInfo(item))
         }

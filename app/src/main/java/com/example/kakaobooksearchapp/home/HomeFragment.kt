@@ -53,7 +53,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     override fun onChangeViewEvent(event: ViewEvent) {
-        TODO("Not yet implemented")
+
     }
 
 
