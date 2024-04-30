@@ -1,9 +1,5 @@
 package com.example.domain.model
 
-import com.example.kakaobooksearchapp.network.response.KakaoBookItem
-import com.example.kakaobooksearchapp.network.response.Meta
-import com.google.gson.annotations.SerializedName
-
 data class KakaoSearchBook(
     val list: List<KakaoBook>,
     val meta: KakaoSearchMeta
