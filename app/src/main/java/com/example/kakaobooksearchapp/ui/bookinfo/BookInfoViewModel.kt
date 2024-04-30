@@ -3,9 +3,10 @@ package com.example.kakaobooksearchapp.ui.bookinfo
 import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.example.domain.model.KakaoBook
+import com.example.domain.usecasse.GetDeleteBookUseCase
+import com.example.domain.usecasse.GetInsertBookUseCase
 import com.example.kakaobooksearchapp.base.BaseViewModel
-import com.example.kakaobooksearchapp.network.response.KakaoBookItem
-import com.example.kakaobooksearchapp.data.repo.BookmarkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,10 +16,12 @@ import javax.inject.Inject
 @HiltViewModel
 class BookInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val bookmarkRepository: BookmarkRepository
+    private val getInsertBookUseCase: GetInsertBookUseCase,
+    private val getDeleteBookUseCase: GetDeleteBookUseCase,
+
 ) : BaseViewModel() {
 
-    private val kakaoBookItem = savedStateHandle.get<KakaoBookItem>("item")
+    private val kakaoBookItem = savedStateHandle.get<KakaoBook>("item")
 
     val isBookmark = ObservableBoolean(kakaoBookItem?.isBookmark ?: false)
 
@@ -34,25 +37,25 @@ class BookInfoViewModel @Inject constructor(
     }
 
 
-    private fun addBookMark(item: KakaoBookItem) {
+    private fun addBookMark(item: KakaoBook) {
         viewModelScope.launch(Dispatchers.IO) {
-            val addBookmarkResult = bookmarkRepository.insertBook(item.toBookmarkItem())
-            onChangedViewState(BookInfoViewState.AddBookmarkResult(addBookmarkResult >= 1L, item))
+            val addBookmarkResult = getInsertBookUseCase(item.toBookmarkItem())
+//            onChangedViewState(BookInfoViewState.AddBookmarkResult(addBookmarkResult >= 1L, item))
             withContext(Dispatchers.Main) {
                 isBookmark.set(true)
             }
         }
     }
 
-    private fun deleteBookMark(item: KakaoBookItem) {
+    private fun deleteBookMark(item: KakaoBook) {
         viewModelScope.launch(Dispatchers.IO) {
-            val deleteBookmarkResult = bookmarkRepository.deleteBook(item.toBookmarkItem())
-            onChangedViewState(
-                BookInfoViewState.DeleteBookmarkResult(
-                    deleteBookmarkResult == 1,
-                    item
-                )
-            )
+            val deleteBookmarkResult = getDeleteBookUseCase(item.toBookmarkItem())
+//            onChangedViewState(
+//                BookInfoViewState.DeleteBookmarkResult(
+//                    deleteBookmarkResult == 1,
+//                    item
+//                )
+//            )
             withContext(Dispatchers.Main){
                 isBookmark.set(false)
             }

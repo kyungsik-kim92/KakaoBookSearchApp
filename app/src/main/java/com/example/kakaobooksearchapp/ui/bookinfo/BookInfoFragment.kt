@@ -12,7 +12,7 @@ import com.example.kakaobooksearchapp.base.BaseFragment
 import com.example.kakaobooksearchapp.base.ViewEvent
 import com.example.kakaobooksearchapp.base.ViewState
 import com.example.kakaobooksearchapp.databinding.FragmentBookinfoBinding
-import com.example.kakaobooksearchapp.util.WebViewOnBackPressedCallback
+import com.example.data.util.WebViewOnBackPressedCallback
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
