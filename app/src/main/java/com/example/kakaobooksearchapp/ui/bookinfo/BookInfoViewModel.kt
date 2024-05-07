@@ -38,18 +38,18 @@ class BookInfoViewModel @Inject constructor(
 
 
     private fun addBookMark(item: KakaoBook) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val addBookmarkResult = getInsertBookUseCase(item.toBookmarkItem())
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val addBookmarkResult = getInsertBookUseCase(item.toBookmarkItem())
 //            onChangedViewState(BookInfoViewState.AddBookmarkResult(addBookmarkResult >= 1L, item))
-            withContext(Dispatchers.Main) {
-                isBookmark.set(true)
-            }
-        }
+//            withContext(Dispatchers.Main) {
+//                isBookmark.set(true)
+//            }
+//        }
     }
 
     private fun deleteBookMark(item: KakaoBook) {
         viewModelScope.launch(Dispatchers.IO) {
-            val deleteBookmarkResult = getDeleteBookUseCase(item.toBookmarkItem())
+//            val deleteBookmarkResult = getDeleteBookUseCase(item.toBookmarkItem())
 //            onChangedViewState(
 //                BookInfoViewState.DeleteBookmarkResult(
 //                    deleteBookmarkResult == 1,

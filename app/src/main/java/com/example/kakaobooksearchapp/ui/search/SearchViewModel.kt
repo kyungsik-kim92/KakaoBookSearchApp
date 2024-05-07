@@ -28,8 +28,8 @@ class SearchViewModel @Inject constructor(
                 DEFAULT_SEARCH_SIZE
             )
             response.onEach { result ->
-                val getBookmarkList = getFavoriteBookUseCase
-                val searchList = result.list
+//                val getBookmarkList = getFavoriteBookUseCase
+//                val searchList = result.list
 //                searchList.map { searchItem ->
 //                    if (getBookmarkList.contains(searchItem.toBookmarkItem())) {
 //                        searchItem.isBookmark = true

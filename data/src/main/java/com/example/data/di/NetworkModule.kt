@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp.di
+package com.example.data.di
 
 import com.example.data.api.KakaoApiService
 import com.example.data.api.KakaoApiService.Companion.BASE_URL

@@ -1,6 +1,5 @@
 package com.example.data.repo
 
-import com.example.data.api.response.BookMarkItem
 import com.example.data.mapper.toBookmarkItem
 import com.example.data.mapper.toKakaoBookmark
 import com.example.data.room.BookSearchDao
