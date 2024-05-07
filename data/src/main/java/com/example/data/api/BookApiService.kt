@@ -1,8 +1,7 @@
-package com.example.kakaobooksearchapp.network
+package com.example.data.api
 
-import com.example.kakaobooksearchapp.constants.KakaoConstants
-import com.example.kakaobooksearchapp.constants.KakaoConstants.API_KEY
-import com.example.kakaobooksearchapp.network.response.BookSearchData
+import com.example.data.api.BookApiService.Companion.KakaoConstants.API_KEY
+import com.example.data.api.response.BookSearchData
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,16 +18,21 @@ interface BookApiService {
         @Query("sort") sort: String,
         @Query("page") page: Int,
         @Query("size") size: Int,
-    ): Response<BookSearchData>
+    ): BookSearchData
 
 
-    companion object{
-        fun create() : BookApiService{
+    companion object {
+        fun create(): BookApiService {
             return Retrofit.Builder()
                 .baseUrl(KakaoConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(BookApiService::class.java)
+        }
+
+        object KakaoConstants {
+            const val BASE_URL = "https://dapi.kakao.com/"
+            const val API_KEY = "a9c9b825ab60749e299b375dc7b313e5"
         }
     }
 

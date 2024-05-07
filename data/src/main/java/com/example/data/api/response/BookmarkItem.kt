@@ -1,4 +1,4 @@
-package com.example.kakaobooksearchapp.room
+package com.example.data.api.response
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "book")
-data class BookMarkItem(
+data class BookmarkItem(
     val authors: List<String>,
     val contents: String,
     val datetime: String,
