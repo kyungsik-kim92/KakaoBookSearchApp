@@ -22,7 +22,7 @@
 
         <argument
             android:name="item"
-            app:argType="com.example.kakaobooksearchapp.network.response.KakaoBookItem" />
+            app:argType="com.example.domain.model.KakaoBook" />
 
     </fragment>
 

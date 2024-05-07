@@ -5,7 +5,7 @@
     <data>
     <variable
         name="bookItem"
-        type="com.example.kakaobooksearchapp.room.BookMarkItem" />
+        type="com.example.domain.model.KakaoBookmark" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -64,11 +64,11 @@
                 android:layout_height="wrap_content"
                 android:autoSizeMinTextSize="8dp"
                 android:gravity="start"
-                android:text="@{bookItem.dateTime()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image"
                 app:layout_constraintTop_toBottomOf="@id/author" />
 
+<!--                android:text="@{bookItem.dateTime()}"-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
