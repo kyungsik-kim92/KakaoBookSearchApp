@@ -1,9 +1,9 @@
-package com.example.kakaobooksearchapp.di
+package com.example.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.kakaobooksearchapp.room.BookSearchDao
-import com.example.kakaobooksearchapp.room.BookSearchDatabase
+import com.example.data.room.BookSearchDao
+import com.example.data.room.BookSearchDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
