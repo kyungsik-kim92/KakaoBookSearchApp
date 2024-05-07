@@ -24,7 +24,6 @@ class BookInfoFragment : BaseFragment<FragmentBookinfoBinding>(R.layout.fragment
     private val mainViewModel by activityViewModels<MainViewModel>()
 
 
-
     override fun initUi() {
         initWebView()
     }
