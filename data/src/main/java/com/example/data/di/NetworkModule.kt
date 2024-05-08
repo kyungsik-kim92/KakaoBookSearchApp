@@ -1,6 +1,6 @@
 package com.example.data.di
 
-import com.example.data.api.BookApiService
+import com.example.data.api.KakaoApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,14 +17,14 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
-            .baseUrl(BookApiService.Companion.KakaoConstants.BASE_URL)
+            .baseUrl(KakaoApiService.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
 
     @Provides
     @Singleton
-    fun provideBookApiService(retrofit: Retrofit): BookApiService =
-        retrofit.create(BookApiService::class.java)
+    fun provideBookApiService(retrofit: Retrofit): KakaoApiService =
+        retrofit.create(KakaoApiService::class.java)
 
 }

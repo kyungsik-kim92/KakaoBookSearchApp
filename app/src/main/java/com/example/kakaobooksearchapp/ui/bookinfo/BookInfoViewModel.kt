@@ -22,7 +22,7 @@ class BookInfoViewModel @Inject constructor(
     private val deleteBookmarkUseCase: DeleteBookmarkUseCase
 ) : BaseViewModel() {
 
-    private val kakaoBookItem = savedStateHandle.get<KakaoBookItem>("item")
+    private val kakaoBookItem = savedStateHandle.get<KakaoBook>("item")
 
 //    val isBookmark = ObservableBoolean()
 
