@@ -12,5 +12,5 @@ data class KakaoBookmark(
     val thumbnail: String,
     val title: String,
     val translators: List<String>,
-    val url: String
+    val url: String,
 )

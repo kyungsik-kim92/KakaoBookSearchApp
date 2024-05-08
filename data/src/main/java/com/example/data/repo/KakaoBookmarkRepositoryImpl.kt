@@ -10,15 +10,15 @@ import javax.inject.Inject
 class KakaoBookmarkRepositoryImpl @Inject constructor(private var bookSearchDao: BookSearchDao) :
     KakaoBookmarkRepository {
     override suspend fun insertBook(item: KakaoBookmark): Long {
-        return bookSearchDao.insertBook(item.toBookmarkItem())
+      return bookSearchDao.insertBook(item.toBookmarkItem())
     }
 
     override suspend fun deleteBook(item: KakaoBookmark): Int {
-        return bookSearchDao.deleteBook(item.toBookmarkItem())
+       return bookSearchDao.deleteBook(item.toBookmarkItem())
     }
 
     override fun getFavoriteBooks(): List<KakaoBookmark> {
-        return bookSearchDao.getFavoriteBooks().map { it.toKakaoBookmark() }
+       return bookSearchDao.getFavoriteBooks().map { it.toKakaoBookmark() }
     }
 
 

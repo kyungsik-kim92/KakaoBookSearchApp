@@ -38,11 +38,11 @@
             android:background="@drawable/btn_star"
             android:backgroundTint="#d070fb"
             android:button="@null"
-            android:checked="@={viewModel.isBookmark()}"
             android:onCheckedChanged="@{(_, isChecked) -> viewModel.onCheckedChanged(isChecked)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+<!--            android:checked="@={viewModel.isBookmark()}"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

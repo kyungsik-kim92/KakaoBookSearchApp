@@ -2,9 +2,10 @@ package com.example.kakaobooksearchapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.domain.model.KakaoBook
 import com.example.kakaobooksearchapp.base.BaseViewModel
 import com.example.kakaobooksearchapp.base.ViewState
+import com.example.data.api.response.KakaoBookItem
+import com.example.domain.model.KakaoBook
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

@@ -2,13 +2,14 @@ package com.example.data.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+
 import androidx.room.TypeConverters
-import com.example.data.api.response.BookMarkItem
+import com.example.data.api.response.BookmarkItem
 import com.example.data.util.TypeConverter
 
 
 @Database(
-    entities = [BookMarkItem::class],
+    entities = [BookmarkItem::class],
     version = 1,
     exportSchema = false
 )
@@ -17,6 +18,5 @@ import com.example.data.util.TypeConverter
 abstract class BookSearchDatabase : RoomDatabase() {
 
     abstract fun bookSearchDao(): BookSearchDao
-
 
 }

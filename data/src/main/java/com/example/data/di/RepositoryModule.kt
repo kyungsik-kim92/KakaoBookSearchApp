@@ -1,6 +1,6 @@
 package com.example.data.di
 
-import com.example.data.api.KakaoApiService
+import com.example.data.api.BookApiService
 import com.example.data.repo.KakaoBookmarkRepositoryImpl
 import com.example.data.repo.KakaoSearchRepositoryImpl
 import com.example.data.room.BookSearchDao
@@ -19,8 +19,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideBookRepository(kakaoApiService: KakaoApiService): KakaoSearchRepository =
-        KakaoSearchRepositoryImpl(kakaoApiService)
+    fun provideBookRepository(bookApiService: BookApiService): KakaoSearchRepository =
+        KakaoSearchRepositoryImpl(bookApiService)
 
 
     @Provides

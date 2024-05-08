@@ -1,10 +1,9 @@
 package com.example.data.mapper
 
-import com.example.data.api.response.BookMarkItem
+import com.example.data.api.response.BookmarkItem
 import com.example.domain.model.KakaoBookmark
 
-
-fun KakaoBookmark.toBookmarkItem() = BookMarkItem(
+fun KakaoBookmark.toBookmarkItem() = BookmarkItem(
     authors,
     contents,
     datetime,
@@ -19,7 +18,7 @@ fun KakaoBookmark.toBookmarkItem() = BookMarkItem(
     url
 )
 
-fun BookMarkItem.toKakaoBookmark() = KakaoBookmark(
+fun BookmarkItem.toKakaoBookmark() = KakaoBookmark(
     authors,
     contents,
     datetime,

@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.domain.model.KakaoBookmark
 import com.example.kakaobooksearchapp.databinding.ItemBookmarkBinding
-
+import com.example.data.api.response.BookmarkItem
+import com.example.domain.model.KakaoBookmark
 
 class BookmarkAdapter :
     ListAdapter<KakaoBookmark, BookmarkAdapter.BookmarkViewHolder>(BookmarkDiffCallback()) {

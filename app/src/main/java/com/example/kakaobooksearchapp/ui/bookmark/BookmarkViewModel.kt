@@ -1,7 +1,7 @@
 package com.example.kakaobooksearchapp.ui.bookmark
 
 import androidx.lifecycle.viewModelScope
-import com.example.domain.usecasse.GetFavoriteBookUseCase
+import com.example.domain.usecase.GetFavoriteBookUseCase
 import com.example.kakaobooksearchapp.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,9 +21,9 @@ class BookmarkViewModel @Inject constructor(private val getFavoriteBookUseCase: 
 
     fun getFavoriteBooks() {
         viewModelScope.launch(Dispatchers.IO) {
-            val bookmarkList = getFavoriteBookUseCase.invoke()
+            val bookmarkList = getFavoriteBookUseCase
             withContext(Dispatchers.Main) {
-                onChangedViewState(BookmarkViewState.BookmarkResult(bookmarkList))
+                onChangedViewState(BookmarkViewState.BookmarkResult(bookmarkList.invoke()))
             }
         }
 

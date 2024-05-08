@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "book")
-data class BookMarkItem(
+data class BookmarkItem(
     val authors: List<String>,
     val contents: String,
     val datetime: String,

@@ -1,8 +1,8 @@
 package com.example.kakaobooksearchapp.ui.search
 
-import com.example.domain.model.KakaoBook
 import com.example.kakaobooksearchapp.base.ViewState
-
+import com.example.data.api.response.KakaoBookItem
+import com.example.domain.model.KakaoBook
 
 sealed class SearchViewState : ViewState {
 
