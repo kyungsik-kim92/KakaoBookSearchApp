@@ -18,7 +18,7 @@ ___
 
   
 ### 주요 라이브러리
-![image](https://github.com/kyungsik-kim92/AroundHospital/assets/93589990/53e274dc-7864-47c2-baa9-d9cd0d11fd18)
+![image](https://github.com/kyungsik-kim92/KakaoBookSearchApp/assets/93589990/836ea481-f879-4907-a545-5fb4773b698a)
 
 
 ### Project Flow
