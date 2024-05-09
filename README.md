@@ -22,4 +22,4 @@ ___
 
 
 ### Project Flow
-![image](https://github.com/kyungsik-kim92/AroundHospital/assets/93589990/e8d9db94-e1df-41b3-8837-2ff64647db96)
+
