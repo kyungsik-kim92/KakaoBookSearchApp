@@ -1,11 +1,14 @@
 package com.example.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class KakaoSearchBook(
     val list: List<KakaoBook>,
     val meta: KakaoSearchMeta
 )
 
-
+@Parcelize
 data class KakaoBook(
     val authors: List<String>,
     val contents: String,
@@ -20,7 +23,7 @@ data class KakaoBook(
     val translators: List<String>,
     val url: String,
     var isBookmark: Boolean = false
-)
+) : Parcelable
 
 data class KakaoSearchMeta(
     val isEnd: Boolean,

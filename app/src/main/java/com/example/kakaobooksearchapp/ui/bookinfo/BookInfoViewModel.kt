@@ -24,7 +24,7 @@ class BookInfoViewModel @Inject constructor(
 
     private val kakaoBookItem = savedStateHandle.get<KakaoBook>("item")
 
-//    val isBookmark = ObservableBoolean()
+
 
     fun onCheckedChanged(check: Boolean) {
 

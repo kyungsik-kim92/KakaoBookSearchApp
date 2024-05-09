@@ -1,85 +1,116 @@
 package com.example.kakaobooksearchapp.ui.search
 
-import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.data.mapper.toBookmarkItem
-import com.example.data.mapper.toKakaoBookmark
 import com.example.domain.model.KakaoBook
 import com.example.domain.usecase.DeleteBookmarkUseCase
-import com.example.domain.usecase.GetFavoriteBookUseCase
+import com.example.domain.usecase.GetFavoriteBookmarkUseCase
 import com.example.domain.usecase.GetKakaoSearchBooksUseCase
 import com.example.domain.usecase.InsertBookmarkUseCase
 import com.example.kakaobooksearchapp.base.BaseViewModel
+import com.example.kakaobooksearchapp.ext.toKakaoBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val getKakaoSearchBooksUseCase: GetKakaoSearchBooksUseCase,
-    private val getFavoriteBookUseCase: GetFavoriteBookUseCase,
+    private val getFavoriteBookmarkUseCase: GetFavoriteBookmarkUseCase,
     private val insertBookmarkUseCase: InsertBookmarkUseCase,
     private val deleteBookmarkUseCase: DeleteBookmarkUseCase
 ) : BaseViewModel() {
 
+//    val isBookmarkStateFlow = MutableStateFlow(false)
+
+    private val _latestAddedState = MutableStateFlow(false)
+    val latestAddedState: MutableStateFlow<Boolean> = _latestAddedState
+
 
     val inputSearchStateFlow = MutableStateFlow("")
 
-    fun searchBooks() = viewModelScope.launch(Dispatchers.IO) {
+//    private val isCheckBookmark: (KakaoBook) -> Flow<Boolean> = { document ->
+//        getFavoriteBookmarkUseCase().map {
+//            it.any { bookmark -> bookmark.isbn == document.isbn }
+//        }
+//    }
+
+    fun searchBooks() =
         inputSearchStateFlow.value.let { input ->
+            val response = getKakaoSearchBooksUseCase(
+                input,
+                DEFAULT_SEARCH_SORT,
+                DEFAULT_SEARCH_PAGE,
+                DEFAULT_SEARCH_SIZE
+            )
+            response.map { result ->
+                onChangedViewState(SearchViewState.GetSearchResult(result.list))
+            }
+        }.launchIn(viewModelScope)
 
-//            val response = getKakaoSearchBooksUseCase(
-//                input,
-//                DEFAULT_SEARCH_SORT,
-//                DEFAULT_SEARCH_PAGE,
-//                DEFAULT_SEARCH_SIZE
-//            )
-//            if (response.isSuccessful) {
 
-            val getBookmarkList = getFavoriteBookUseCase
-//                response.body()?.let { body ->
-//                    val searchList = body.kakaoBookItems
-//                    searchList.map { searchItem ->
-//                        if (getBookmarkList.contains(searchItem.toBookmarkItem())) {
-//                            searchItem.isBookmark = true
-//                        }
-//                    }
-//                    onChangedViewState(SearchViewState.GetSearchResult(body.kakaoBookItems))
-//                }
-//            }
+//    fun addBookMark(item: KakaoBook) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            onChangedViewState(SearchViewState.AddBookmarkResult(item))
+//            insertBookmarkUseCase.invoke(item.toKakaoBookmark())
+//        }
+//    }
+//
+//
+//    fun deleteBookMark(item: KakaoBook) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            onChangedViewState(SearchViewState.DeleteBookmarkResult(item))
+//            deleteBookmarkUseCase.invoke(item.toKakaoBookmark())
+//        }
+//    }
+
+//
+//    fun toggleBookmark(item: KakaoBook) = viewModelScope.launch(Dispatchers.IO) {
+//        if (isCheckBookmark(item).first()) {
+//            insertBookmarkUseCase(item.toKakaoBookmark())
+//        } else {
+//            deleteBookmarkUseCase(item.toKakaoBookmark())
+//        }
+//    }
+//
+//    private fun checkBookmarkState(item: KakaoBook) {
+//        isCheckBookmark(item).onEach {
+//            isBookmarkStateFlow.value = it
+//        }.launchIn(viewModelScope)
+//    }
+
+
+//    fun loadSavedState() {
+//        viewModelScope.launch {
+//            val bookmarkItem = getFavoriteBookmarkUseCase()
+//            latestAddedState.value = bookmarkItem != null
+//        }
+//
+//    }
+
+    fun addBookmark(item: KakaoBook) {
+        val latest = _latestAddedState.value
+        viewModelScope.launch {
+            if (!latest)
+                insertBookmarkUseCase.invoke(item.toKakaoBookmark())
+            _latestAddedState.value = latest
         }
     }
 
-    fun addBookMark(item: KakaoBook) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val addBookmarkResult = insertBookmarkUseCase(item.toBookmarkItem().toKakaoBookmark())
-//            onChangedViewState(
-//                SearchViewState.AddBookmarkResult(
-//                    addBookmarkResult >= 1L,
-//                    item
-//                ),
-//            )
+    fun deleteBookmark(item: KakaoBook) {
+        val latest = _latestAddedState.value
+        viewModelScope.launch {
+            if (latest)
+                deleteBookmarkUseCase.invoke(item.toKakaoBookmark())
         }
-
+        _latestAddedState.value = !latest
     }
 
-
-    fun deleteBookMark(item: KakaoBook) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val deleteBookmarkResult =
-                deleteBookmarkUseCase(item.toBookmarkItem().toKakaoBookmark())
-//            onChangedViewState(
-//                SearchViewState.DeleteBookmarkResult(
-//                    deleteBookmarkResult == 1,
-//                    item
-//                )
-//            )
-        }
-    }
 
     companion object {
         private const val DEFAULT_SEARCH_SORT = "accuracy"

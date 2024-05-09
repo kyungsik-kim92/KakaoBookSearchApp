@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.data.api.response.BookmarkItem
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookSearchDao {
@@ -20,6 +21,6 @@ interface BookSearchDao {
 
 
     @Query("SELECT * FROM book")
-    fun getFavoriteBooks(): List<BookmarkItem>
+    fun getFavoriteBooks(): Flow<List<BookmarkItem>>
 
 }

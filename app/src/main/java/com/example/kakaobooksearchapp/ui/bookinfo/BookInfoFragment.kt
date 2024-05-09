@@ -6,6 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.data.mapper.toBookmarkItem
 import com.example.kakaobooksearchapp.MainViewModel
 import com.example.kakaobooksearchapp.R
 import com.example.kakaobooksearchapp.base.BaseFragment

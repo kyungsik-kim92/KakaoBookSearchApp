@@ -1,33 +1,31 @@
 package com.example.kakaobooksearchapp.ui.bookmark
 
 import androidx.lifecycle.viewModelScope
-import com.example.domain.usecase.GetFavoriteBookUseCase
+import com.example.domain.usecase.GetFavoriteBookmarkUseCase
 import com.example.kakaobooksearchapp.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
-class BookmarkViewModel @Inject constructor(private val getFavoriteBookUseCase: GetFavoriteBookUseCase) :
+class BookmarkViewModel @Inject constructor(private val getFavoriteBookmarkUseCase: GetFavoriteBookmarkUseCase) :
     BaseViewModel() {
-//    private val _items = MutableStateFlow<List<BookMarkItem>>(emptyList())
-//    val items: MutableStateFlow<List<BookMarkItem>> = _items
+    val bookmarkStateFlow = MutableStateFlow(true)
 
     init {
         getFavoriteBooks()
     }
 
     fun getFavoriteBooks() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val bookmarkList = getFavoriteBookUseCase
-            withContext(Dispatchers.Main) {
-                onChangedViewState(BookmarkViewState.BookmarkResult(bookmarkList.invoke()))
-            }
-        }
-
+        getFavoriteBookmarkUseCase().map {
+            bookmarkStateFlow.value = it.isNotEmpty()
+            onChangedViewEvent(BookmarkViewEvent.BookmarkResult(it))
+        }.launchIn(viewModelScope)
 
     }
-
 }
+
+
+
