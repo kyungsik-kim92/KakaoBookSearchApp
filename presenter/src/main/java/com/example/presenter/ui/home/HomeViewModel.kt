@@ -1,4 +1,4 @@
-package com.example.presenter.home
+package com.example.presenter.ui.home
 
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.KakaoBook

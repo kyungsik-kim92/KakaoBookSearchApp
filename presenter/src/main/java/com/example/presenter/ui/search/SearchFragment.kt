@@ -7,7 +7,7 @@ import com.example.presenter.base.BaseFragment
 import com.example.presenter.base.ViewEvent
 import com.example.presenter.base.ViewState
 import com.example.presenter.databinding.FragmentSearchBinding
-import com.example.presenter.home.HomeViewModel
+import com.example.presenter.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

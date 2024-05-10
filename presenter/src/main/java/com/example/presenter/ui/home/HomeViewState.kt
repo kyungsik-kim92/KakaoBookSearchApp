@@ -1,4 +1,4 @@
-package com.example.presenter.home
+package com.example.presenter.ui.home
 
 import com.example.domain.model.KakaoBook
 import com.example.presenter.base.ViewState

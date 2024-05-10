@@ -1,4 +1,4 @@
-package com.example.presenter.home
+package com.example.presenter.ui.home
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
