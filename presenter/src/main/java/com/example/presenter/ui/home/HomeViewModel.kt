@@ -13,7 +13,7 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
 
     fun routeBookInfo(item: KakaoBook) {
         viewModelScope.launch {
-            onChangedViewState(HomeViewState.RouteBookInfo(item))
+            onChangedViewEvent(HomeViewEvent.RouteBookInfo(item))
         }
     }
 

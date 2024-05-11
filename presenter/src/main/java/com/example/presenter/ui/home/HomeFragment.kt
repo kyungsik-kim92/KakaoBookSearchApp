@@ -43,17 +43,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     override fun onChangedViewState(state: ViewState) {
-        when (state) {
-            is HomeViewState.RouteBookInfo -> {
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToBookInfoFragment(state.item)
-                findNavController().navigate(action)
-            }
-        }
+
     }
 
     override fun onChangeViewEvent(event: ViewEvent) {
-
+        when (event) {
+            is HomeViewEvent.RouteBookInfo -> {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToBookInfoFragment(event.item)
+                findNavController().navigate(action)
+            }
+        }
     }
 
 
