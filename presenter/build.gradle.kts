@@ -37,7 +37,7 @@ android {
     }
 
     buildFeatures {
-        compose = true
+//        compose = true
         dataBinding = true
     }
 }
@@ -89,15 +89,15 @@ dependencies {
 
 
 
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-
-    implementation(libs.androidx.constraintlayout.compose)
-    implementation(libs.hilt.navigation.compose)
-
+//    androidTestImplementation(libs.androidx.ui.test.junit4)
+//
+//    androidTestImplementation(platform(libs.androidx.compose.bom))
+//    debugImplementation(libs.androidx.ui.tooling)
+//    debugImplementation(libs.androidx.ui.test.manifest)
+//
+//    implementation(libs.androidx.constraintlayout.compose)
+//    implementation(libs.hilt.navigation.compose)
+//
 
 
 }
