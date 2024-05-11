@@ -1,31 +1,33 @@
 package com.example.presenter.ui.bookmark
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.GetFavoriteBookmarkUseCase
 import com.example.presenter.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(private val getFavoriteBookmarkUseCase: GetFavoriteBookmarkUseCase) :
-    BaseViewModel() {
-    val bookmarkStateFlow = MutableStateFlow(true)
+    BaseViewModel(), LifecycleEventObserver {
 
-    init {
-        getFavoriteBooks()
-    }
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        when (event) {
+            Lifecycle.Event.ON_RESUME -> {
+                getFavoriteBookmarkUseCase().map {
+                    onChangedViewEvent(BookmarkViewEvent.BookmarkResult(it))
+                }.launchIn(viewModelScope)
+            }
 
-    fun getFavoriteBooks() {
-        getFavoriteBookmarkUseCase().map {
-            bookmarkStateFlow.value = it.isNotEmpty()
-            onChangedViewEvent(BookmarkViewEvent.BookmarkResult(it))
-        }.launchIn(viewModelScope)
-
+            else -> Unit
+        }
     }
 }
+
 
 
 

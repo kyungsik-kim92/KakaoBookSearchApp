@@ -19,6 +19,7 @@ class BookmarkFragment() : BaseFragment<FragmentBookmarkBinding>(R.layout.fragme
 
     override fun initUi() {
         binding.rvFavoriteBooks.adapter = bookmarkAdapter
+        viewLifecycleOwner.lifecycle.addObserver(viewModel)
     }
 
     override fun onChangedViewState(state: ViewState) {
@@ -30,12 +31,6 @@ class BookmarkFragment() : BaseFragment<FragmentBookmarkBinding>(R.layout.fragme
                 bookmarkAdapter.submitList(event.list)
             }
         }
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getFavoriteBooks()
     }
 
 
