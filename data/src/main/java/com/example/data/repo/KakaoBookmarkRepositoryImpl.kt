@@ -19,9 +19,8 @@ class KakaoBookmarkRepositoryImpl @Inject constructor(private var bookSearchDao:
         return bookSearchDao.deleteBook(item.toBookmarkItem())
     }
 
-    override fun getFavoriteBooks(): Flow<List<KakaoBookmark>> {
-        return bookSearchDao.getFavoriteBooks().map { it.map { it.toKakaoBookmark() } }
-    }
+    override val favoriteBooks: Flow<List<KakaoBookmark>>
+        get() = bookSearchDao.getFavoriteBooks().map { it.map { it.toKakaoBookmark() } }
 
 
 }
