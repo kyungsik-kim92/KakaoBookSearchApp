@@ -15,9 +15,8 @@ class SearchBookAdapter(
     val onItemClick: (KakaoBook) -> Unit,
     val onBookmarkInsertClick: (KakaoBook) -> Unit,
     val onBookmarkDeleteClick: (KakaoBook) -> Unit,
-) :
-    ListAdapter<KakaoBook, SearchBookAdapter.SearchViewHolder>(SearchDiffCallback()) {
-    private val kakaoBookList = mutableListOf<KakaoBook>()
+) : ListAdapter<KakaoBook, SearchBookAdapter.SearchViewHolder>(SearchDiffCallback()) {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder(
@@ -42,28 +41,24 @@ class SearchBookAdapter(
             kakaoBook: KakaoBook,
             onItemClick: (KakaoBook) -> Unit,
             onBookmarkInsertClick: (KakaoBook) -> Unit,
-            onBookmarkDeleteClick: (KakaoBook) -> Unit,
+            onBookmarkDeleteClick: (KakaoBook) -> Unit
 
-            ) {
+        ) {
             binding.bookItem = kakaoBook
             binding.author.text = kakaoBook.authors.toString()
-            binding.bookmark.isChecked = statusCheckBox[adapterPosition]
+            binding.bookmark.isChecked = kakaoBook.isBookmark
 
             binding.bookmark.setOnClickListener {
 
                 if (!binding.bookmark.isChecked) {
                     onBookmarkDeleteClick(kakaoBook)
-                    statusCheckBox.put(adapterPosition, true)
                     Snackbar.make(binding.root, "북마크가 해제 되었습니다.", Snackbar.LENGTH_SHORT).show()
-
-
                 } else {
                     onBookmarkInsertClick(kakaoBook)
-                    statusCheckBox.put(adapterPosition, false)
                     Snackbar.make(binding.root, "북마크에 추가 되었습니다.", Snackbar.LENGTH_SHORT).show()
-
                 }
             }
+
             itemView.setOnClickListener {
                 onItemClick(kakaoBook)
 
@@ -74,21 +69,21 @@ class SearchBookAdapter(
     }
 
 
-//    fun addBookmark(item: KakaoBook) {
-//        if (kakaoBookList.contains(item)) {
-//            val position = kakaoBookList.indexOf(item)
-//            kakaoBookList[position].isBookmark = true
-//            submitList(kakaoBookList)
-//        }
-//    }
-//
-//    fun deleteBookmark(item: KakaoBook) {
-//        if (kakaoBookList.contains(item)) {
-//            val position = kakaoBookList.indexOf(item)
-//            kakaoBookList[position].isBookmark = false
-//            submitList(kakaoBookList)
-//        }
-//    }
+    fun addBookmark(item: KakaoBook) {
+        if (currentList.any { it.isbn == item.isbn }) {
+            val position = currentList.indexOfFirst { it.isbn == item.isbn }
+            currentList[position].isBookmark = true
+            notifyItemChanged(position)
+        }
+    }
+
+    fun deleteBookmark(item: KakaoBook) {
+        if (currentList.any { it.isbn == item.isbn }) {
+            val position = currentList.indexOfFirst { it.isbn == item.isbn }
+            currentList[position].isBookmark = false
+            notifyItemChanged(position)
+        }
+    }
 }
 
 
