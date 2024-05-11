@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetFavoriteBookmarkUseCase @Inject constructor(private val kakaoBookmarkRepository: KakaoBookmarkRepository) {
 
     operator fun invoke(): Flow<List<KakaoBookmark>> {
-        return kakaoBookmarkRepository.getFavoriteBooks()
+        return kakaoBookmarkRepository.favoriteBooks
     }
 
 }
