@@ -1,13 +1,13 @@
 package com.example.presenter.ui.search
 
 import androidx.lifecycle.viewModelScope
+import com.example.data.mapper.toKakaoBookmark
 import com.example.domain.model.KakaoBook
 import com.example.domain.usecase.DeleteBookmarkUseCase
 import com.example.domain.usecase.GetFavoriteBookmarkUseCase
 import com.example.domain.usecase.GetKakaoSearchBooksUseCase
 import com.example.domain.usecase.InsertBookmarkUseCase
 import com.example.presenter.base.BaseViewModel
-import com.example.presenter.ext.toKakaoBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,7 +45,6 @@ class SearchViewModel @Inject constructor(
                 onChangedViewState(SearchViewState.GetSearchResult(convertBookmarkList))
             }.launchIn(viewModelScope)
         }
-
 
 
     fun addBookmark(item: KakaoBook) {
