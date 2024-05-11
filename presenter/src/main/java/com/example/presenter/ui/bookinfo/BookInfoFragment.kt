@@ -6,6 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.data.mapper.toKakaoBookmark
 import com.example.data.util.WebViewOnBackPressedCallback
 import com.example.presenter.MainViewModel
 import com.example.presenter.R
@@ -28,30 +29,18 @@ class BookInfoFragment : BaseFragment<FragmentBookinfoBinding>(R.layout.fragment
         initWebView()
     }
 
-    override fun onChangedViewState(state: ViewState) {
-        when (state) {
-            is BookInfoViewState.AddBookmarkResult -> {
-                if (state.result) {
-                    Snackbar.make(requireView(), "북마크에 추가 되었습니다.", Snackbar.LENGTH_SHORT).show()
-                    mainViewModel.addBookmark(state.item)
-                } else {
-                    Snackbar.make(requireView(), "북마크에 추가를 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
-                }
-            }
-
-            is BookInfoViewState.DeleteBookmarkResult -> {
-                if (state.result) {
-                    Snackbar.make(requireView(), "북마크에 해제 되었습니다.", Snackbar.LENGTH_SHORT).show()
-                    mainViewModel.deleteBookmark(state.item)
-                } else {
-                    Snackbar.make(requireView(), "북마크에 해제를 실패하였습니다.", Snackbar.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
+    override fun onChangedViewState(state: ViewState) {}
 
     override fun onChangeViewEvent(event: ViewEvent) {
+        when (event) {
+            is BookInfoViewEvent.AddBookmark -> {
+                mainViewModel.addBookmark(args.item.toKakaoBookmark())
+            }
 
+            is BookInfoViewEvent.DeleteBookmark -> {
+                mainViewModel.deleteBookmark(args.item.toKakaoBookmark())
+            }
+        }
     }
 
 
