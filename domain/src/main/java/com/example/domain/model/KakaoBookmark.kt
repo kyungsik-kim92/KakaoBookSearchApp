@@ -14,3 +14,18 @@ data class KakaoBookmark(
     val translators: List<String>,
     val url: String,
 )
+
+fun KakaoBookmark.toKakaoBook(): KakaoBook = KakaoBook(
+    authors,
+    contents,
+    datetime,
+    isbn,
+    price,
+    publisher,
+    salePrice,
+    status,
+    thumbnail,
+    title,
+    translators,
+    url
+)

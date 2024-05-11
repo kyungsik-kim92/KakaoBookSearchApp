@@ -5,6 +5,7 @@ import com.example.data.api.response.BookmarkItem
 import com.example.data.api.response.KakaoBookItem
 import com.example.data.api.response.Meta
 import com.example.domain.model.KakaoBook
+import com.example.domain.model.KakaoBookmark
 import com.example.domain.model.KakaoSearchBook
 import com.example.domain.model.KakaoSearchMeta
 
@@ -34,5 +35,31 @@ fun BookSearchData.toKakaoSearchBook() = KakaoSearchBook(
 )
 
 fun KakaoBook.toBookmarkItem() = BookmarkItem(
-    authors, contents, datetime, isbn, price, publisher, salePrice, status, thumbnail, title, translators, url
+    authors,
+    contents,
+    datetime,
+    isbn,
+    price,
+    publisher,
+    salePrice,
+    status,
+    thumbnail,
+    title,
+    translators,
+    url
+)
+
+fun KakaoBook.toKakaoBookmark() = KakaoBookmark(
+    authors,
+    contents,
+    datetime,
+    isbn,
+    price,
+    publisher,
+    salePrice,
+    status,
+    thumbnail,
+    title,
+    translators,
+    url
 )
