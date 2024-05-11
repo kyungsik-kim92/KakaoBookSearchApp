@@ -9,7 +9,9 @@ import com.example.domain.usecase.InsertBookmarkUseCase
 import com.example.presenter.base.BaseViewModel
 import com.example.presenter.ext.toKakaoBookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -24,89 +26,40 @@ class SearchViewModel @Inject constructor(
     private val deleteBookmarkUseCase: DeleteBookmarkUseCase
 ) : BaseViewModel() {
 
-//    val isBookmarkStateFlow = MutableStateFlow(false)
-
-    private val _latestAddedState = MutableStateFlow(false)
-    val latestAddedState: MutableStateFlow<Boolean> = _latestAddedState
-
 
     val inputSearchStateFlow = MutableStateFlow("")
 
-//    private val isCheckBookmark: (KakaoBook) -> Flow<Boolean> = { document ->
-//        getFavoriteBookmarkUseCase().map {
-//            it.any { bookmark -> bookmark.isbn == document.isbn }
-//        }
-//    }
 
     fun searchBooks() =
         inputSearchStateFlow.value.let { input ->
-            val response = getKakaoSearchBooksUseCase(
+            getKakaoSearchBooksUseCase(
                 input,
                 DEFAULT_SEARCH_SORT,
                 DEFAULT_SEARCH_PAGE,
                 DEFAULT_SEARCH_SIZE
-            )
-            response.map { result ->
-                onChangedViewState(SearchViewState.GetSearchResult(result.list))
-            }
-        }.launchIn(viewModelScope)
+            ).map { result ->
+                val bookmarkList = getFavoriteBookmarkUseCase().first()
+                val convertBookmarkList = result.list.map { item ->
+                    item.copy(isBookmark = bookmarkList.any { bookmark -> bookmark.isbn == item.isbn })
+                }
+                onChangedViewState(SearchViewState.GetSearchResult(convertBookmarkList))
+            }.launchIn(viewModelScope)
+        }
 
 
-//    fun addBookMark(item: KakaoBook) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            onChangedViewState(SearchViewState.AddBookmarkResult(item))
-//            insertBookmarkUseCase.invoke(item.toKakaoBookmark())
-//        }
-//    }
-//
-//
-//    fun deleteBookMark(item: KakaoBook) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            onChangedViewState(SearchViewState.DeleteBookmarkResult(item))
-//            deleteBookmarkUseCase.invoke(item.toKakaoBookmark())
-//        }
-//    }
-
-//
-//    fun toggleBookmark(item: KakaoBook) = viewModelScope.launch(Dispatchers.IO) {
-//        if (isCheckBookmark(item).first()) {
-//            insertBookmarkUseCase(item.toKakaoBookmark())
-//        } else {
-//            deleteBookmarkUseCase(item.toKakaoBookmark())
-//        }
-//    }
-//
-//    private fun checkBookmarkState(item: KakaoBook) {
-//        isCheckBookmark(item).onEach {
-//            isBookmarkStateFlow.value = it
-//        }.launchIn(viewModelScope)
-//    }
-
-
-//    fun loadSavedState() {
-//        viewModelScope.launch {
-//            val bookmarkItem = getFavoriteBookmarkUseCase()
-//            latestAddedState.value = bookmarkItem != null
-//        }
-//
-//    }
 
     fun addBookmark(item: KakaoBook) {
-        val latest = _latestAddedState.value
-        viewModelScope.launch {
-            if (!latest)
-                insertBookmarkUseCase.invoke(item.toKakaoBookmark())
-            _latestAddedState.value = latest
+        viewModelScope.launch(Dispatchers.IO) {
+            insertBookmarkUseCase(item.toKakaoBookmark())
+            onChangedViewEvent(SearchViewEvent.AddBookItem(item))
         }
     }
 
     fun deleteBookmark(item: KakaoBook) {
-        val latest = _latestAddedState.value
-        viewModelScope.launch {
-            if (latest)
-                deleteBookmarkUseCase.invoke(item.toKakaoBookmark())
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteBookmarkUseCase(item.toKakaoBookmark())
+            onChangedViewEvent(SearchViewEvent.DeleteBookItem(item))
         }
-        _latestAddedState.value = !latest
     }
 
 
