@@ -2,7 +2,7 @@
 카카오 책 검색 API를 이용해 도서 이름을 검색해서 도서를 찾는 서비스. 도서 클릭 시 웹뷰를 이용해 도서의 상세 정보를 확인할 수 있습니다.
 ### Skills
 ___
-Clean Architecture, Kotiln, MVVM, Compose, Corountine Flow,  Hilt, DataBinding, Navigation, Room, Retrofit,  Glide, ConstraintLayout
+Clean Architecture, Kotiln, MVVM, Compose, Corountine Flow,  Hilt, Navigation, Room, Retrofit,  Glide, ConstraintLayout
 ___  
 ![image](https://github.com/kyungsik-kim92/ObjectDetction/assets/93589990/824eb5e8-adbd-43a9-af1c-2d6c432df6cc)
 
