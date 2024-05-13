@@ -35,9 +35,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 
     buildFeatures {
-//        compose = true
+        compose = true
         dataBinding = true
     }
 }
@@ -89,15 +92,21 @@ dependencies {
 
 
 
-//    androidTestImplementation(libs.androidx.ui.test.junit4)
-//
-//    androidTestImplementation(platform(libs.androidx.compose.bom))
-//    debugImplementation(libs.androidx.ui.tooling)
-//    debugImplementation(libs.androidx.ui.test.manifest)
-//
-//    implementation(libs.androidx.constraintlayout.compose)
-//    implementation(libs.hilt.navigation.compose)
-//
+//compose
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
 
+    implementation(libs.androidx.constraintlayout.compose)
+
+    implementation(libs.coil.compose)
+
+    implementation(libs.hilt.navigation.compose)
+
+    implementation (libs.navigation.compose)
 
 }
