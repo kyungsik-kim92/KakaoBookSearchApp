@@ -64,9 +64,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-    // glide
-    implementation(libs.glide)
-
     // ViewModelScope
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
 
