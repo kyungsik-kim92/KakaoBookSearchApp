@@ -1,37 +1,38 @@
 package com.example.presenter.ui.bookmark
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.runtime.collectAsState
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.presenter.R
-import com.example.presenter.adapter.BookmarkAdapter
-import com.example.presenter.base.BaseFragment
-import com.example.presenter.base.ViewEvent
-import com.example.presenter.base.ViewState
 import com.example.presenter.databinding.FragmentBookmarkBinding
+import com.example.presenter.ui.bookmark.component.KakaoBookmarkList
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookmarkFragment() : BaseFragment<FragmentBookmarkBinding>(R.layout.fragment_bookmark) {
-
-    private val bookmarkAdapter = BookmarkAdapter()
-
-    override val viewModel by viewModels<BookmarkViewModel>()
+class BookmarkFragment() : Fragment() {
+    private lateinit var binding: FragmentBookmarkBinding
+    private val viewModel by viewModels<BookmarkViewModel>()
 
 
-    override fun initUi() {
-        binding.rvFavoriteBooks.adapter = bookmarkAdapter
-        viewLifecycleOwner.lifecycle.addObserver(viewModel)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bookmark, container, false)
+        return binding.root
     }
 
-    override fun onChangedViewState(state: ViewState) {
-    }
 
-    override fun onChangeViewEvent(event: ViewEvent) {
-        when (event) {
-            is BookmarkViewEvent.BookmarkResult -> {
-                bookmarkAdapter.submitList(event.list)
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.favoriteBooks.setContent {
+            KakaoBookmarkList(viewModel.bookmarkList.collectAsState().value)
         }
     }
-
-
 }
