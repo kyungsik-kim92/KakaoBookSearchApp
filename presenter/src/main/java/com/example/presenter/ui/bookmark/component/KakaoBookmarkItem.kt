@@ -1,5 +1,6 @@
 package com.example.presenter.ui.bookmark.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -9,6 +10,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,7 +31,7 @@ fun KakaoBookmarkItem(
     ) {
 
         ConstraintLayout(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().background(Color.White)
         ) {
             val (image, title, author, dateTime) = createRefs()
 
@@ -48,10 +51,11 @@ fun KakaoBookmarkItem(
                 .constrainAs(title) {
                     linkTo(start = image.end, end = parent.end)
                     linkTo(top = image.top, bottom = author.top)
-                    width = Dimension.wrapContent
+                    width = Dimension.fillToConstraints
                     height = Dimension.wrapContent
                 }
-                .padding(5.dp), maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 20.sp)
+                .padding(5.dp), maxLines = 1, overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center, fontSize = 20.sp)
 
 
 
@@ -71,7 +75,8 @@ fun KakaoBookmarkItem(
                     linkTo(top = author.bottom, bottom = parent.bottom)
                     width = Dimension.wrapContent
                     height = Dimension.wrapContent
-                }, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 8.sp)
+                }, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 8.sp
+            )
 
         }
 
