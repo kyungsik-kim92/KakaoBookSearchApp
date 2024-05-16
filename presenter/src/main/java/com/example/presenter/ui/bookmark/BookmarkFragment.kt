@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BookmarkFragment() : Fragment() {
     private lateinit var binding: FragmentBookmarkBinding
-    private val viewModel by viewModels<BookmarkViewModel>()
+
 
 
     override fun onCreateView(
@@ -32,7 +32,7 @@ class BookmarkFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.favoriteBooks.setContent {
-            KakaoBookmarkList(viewModel.bookmarkList.collectAsState().value)
+            KakaoBookmarkList()
         }
     }
 }

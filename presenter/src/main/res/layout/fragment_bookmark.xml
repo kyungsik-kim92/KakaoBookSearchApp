@@ -6,17 +6,12 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/favorite_books"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"/>
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_favorite_books"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
