@@ -19,7 +19,7 @@ ___
 
   
 ### 주요 라이브러리
-![image](https://github.com/kyungsik-kim92/KakaoBookSearchApp/assets/93589990/6d8648a7-78fe-42d8-8295-b459bb46797d)
+![image](https://github.com/kyungsik-kim92/KakaoBookSearchApp/assets/93589990/76f37c66-ca7b-42b0-a450-eb42376b165d)
 
 
 ### Project Flow
