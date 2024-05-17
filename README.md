@@ -11,6 +11,7 @@ ___
 ### 주요 기능
 - MVVM + Clean Architecture
 - Jetpack Compose
+- DataBinding으로 구현한 MVVM 형식의 코드를 Compose와 Clean Architecture를 이용해서 마이그레이션
 - Room 라이브러리 사용 책의 즐겨찾기 추가, 삭제 기능
 - Hilt 라이브러리 사용 의존성 주입
 - Glide 라이브러리 사용해서 책의 이미지 관리
