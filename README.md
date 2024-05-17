@@ -11,6 +11,7 @@ ___
 ### 주요 기능
 - MVVM + Clean Architecture
 - Jetpack Compose
+- DataBinding으로 구현한 MVVM 형식의 코드를 Compose와 Clean Architecture를 이용해서 마이그레이션
 - Room 라이브러리 사용 책의 즐겨찾기 추가, 삭제 기능
 - Hilt 라이브러리 사용 의존성 주입
 - Glide 라이브러리 사용해서 책의 이미지 관리
@@ -18,8 +19,8 @@ ___
 
   
 ### 주요 라이브러리
-![image](https://github.com/kyungsik-kim92/KakaoBookSearchApp/assets/93589990/6d8648a7-78fe-42d8-8295-b459bb46797d)
+![image](https://github.com/kyungsik-kim92/KakaoBookSearchApp/assets/93589990/76f37c66-ca7b-42b0-a450-eb42376b165d)
 
 
 ### Project Flow
-(피드백 듣고 준비 예정)
+![image](https://github.com/kyungsik-kim92/KakaoBookSearchApp/assets/93589990/23584621-6e34-4dc9-8d79-87adcabef0b4)
