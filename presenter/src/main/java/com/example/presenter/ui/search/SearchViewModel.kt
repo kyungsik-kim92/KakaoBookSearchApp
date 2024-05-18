@@ -42,7 +42,7 @@ class SearchViewModel @Inject constructor(
                 val convertBookmarkList = result.list.map { item ->
                     item.copy(isBookmark = bookmarkList.any { bookmark -> bookmark.isbn == item.isbn })
                 }
-                onChangedViewState(SearchViewState.GetSearchResult(convertBookmarkList))
+                onChangedViewState(SearchViewState(convertBookmarkList))
             }.launchIn(viewModelScope)
         }
 
