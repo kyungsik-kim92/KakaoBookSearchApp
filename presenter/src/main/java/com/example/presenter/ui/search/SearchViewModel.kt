@@ -1,5 +1,6 @@
 package com.example.presenter.ui.search
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.mapper.toKakaoBookmark
 import com.example.domain.model.KakaoBook
@@ -7,13 +8,14 @@ import com.example.domain.usecase.DeleteBookmarkUseCase
 import com.example.domain.usecase.GetFavoriteBookmarkUseCase
 import com.example.domain.usecase.GetKakaoSearchBooksUseCase
 import com.example.domain.usecase.InsertBookmarkUseCase
-import com.example.presenter.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,41 +26,49 @@ class SearchViewModel @Inject constructor(
     private val getFavoriteBookmarkUseCase: GetFavoriteBookmarkUseCase,
     private val insertBookmarkUseCase: InsertBookmarkUseCase,
     private val deleteBookmarkUseCase: DeleteBookmarkUseCase
-) : BaseViewModel() {
+) : ViewModel() {
+
+    private val _searchViewState = MutableStateFlow(SearchViewState())
+    val searchViewState: StateFlow<SearchViewState> = _searchViewState
 
 
-    val inputSearchStateFlow = MutableStateFlow("")
-
-
-    fun searchBooks() =
-        inputSearchStateFlow.value.let { input ->
-            getKakaoSearchBooksUseCase(
-                input,
-                DEFAULT_SEARCH_SORT,
-                DEFAULT_SEARCH_PAGE,
-                DEFAULT_SEARCH_SIZE
-            ).map { result ->
-                val bookmarkList = getFavoriteBookmarkUseCase().first()
-                val convertBookmarkList = result.list.map { item ->
-                    item.copy(isBookmark = bookmarkList.any { bookmark -> bookmark.isbn == item.isbn })
-                }
-                onChangedViewState(SearchViewState(convertBookmarkList))
-            }.launchIn(viewModelScope)
-        }
-
-
-    fun addBookmark(item: KakaoBook) {
-        viewModelScope.launch(Dispatchers.IO) {
-            insertBookmarkUseCase(item.toKakaoBookmark())
-            onChangedViewEvent(SearchViewEvent.AddBookItem(item))
-        }
+    init {
+        getFavoriteBookmarkUseCase().map {
+            val bookmarkList = getFavoriteBookmarkUseCase().first()
+            val convertBookmarkList = _searchViewState.value.list.map { item ->
+                item.copy(isBookmark = bookmarkList.any { bookmark -> bookmark.isbn == item.isbn })
+            }
+            _searchViewState.update {
+                it.copy(list = convertBookmarkList)
+            }
+        }.launchIn(viewModelScope)
     }
 
-    fun deleteBookmark(item: KakaoBook) {
-        viewModelScope.launch(Dispatchers.IO) {
-            deleteBookmarkUseCase(item.toKakaoBookmark())
-            onChangedViewEvent(SearchViewEvent.DeleteBookItem(item))
-        }
+
+    fun searchBooks(keyword: String) =
+        getKakaoSearchBooksUseCase(
+            keyword,
+            DEFAULT_SEARCH_SORT,
+            DEFAULT_SEARCH_PAGE,
+            DEFAULT_SEARCH_SIZE
+        ).map { result ->
+            val bookmarkList = getFavoriteBookmarkUseCase().first()
+            val convertBookmarkList = result.list.map { item ->
+                item.copy(isBookmark = bookmarkList.any { bookmark -> bookmark.isbn == item.isbn })
+            }
+            _searchViewState.update {
+                it.copy(list = convertBookmarkList)
+            }
+
+        }.launchIn(viewModelScope)
+
+
+    fun addBookmark(item: KakaoBook) = viewModelScope.launch(Dispatchers.IO) {
+        insertBookmarkUseCase(item.toKakaoBookmark())
+    }
+
+    fun deleteBookmark(item: KakaoBook) = viewModelScope.launch(Dispatchers.IO) {
+        deleteBookmarkUseCase(item.toKakaoBookmark())
     }
 
 
@@ -69,3 +79,4 @@ class SearchViewModel @Inject constructor(
 
     }
 }
+

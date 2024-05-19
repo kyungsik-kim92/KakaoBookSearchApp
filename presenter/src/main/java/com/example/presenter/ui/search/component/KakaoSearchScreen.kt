@@ -13,8 +13,6 @@ import com.example.presenter.ui.search.SearchViewModel
 fun KakaoSearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
     onRouteDetail: (KakaoBook) -> Unit,
-    onInsertBookmark: (KakaoBook) -> Unit,
-    onDeleteBookmark: (KakaoBook) -> Unit
 ) {
     val searchList = viewModel.searchViewState.collectAsState().value.list
 
@@ -28,8 +26,8 @@ fun KakaoSearchScreen(
             onClick = { item ->
                 onRouteDetail(item)
             },
-            onDeleteBookmark = onDeleteBookmark,
-            onInsertBookmark = onInsertBookmark
+            onInsertBookmark = viewModel::addBookmark,
+            onDeleteBookmark = viewModel::deleteBookmark
         )
     }
 }
