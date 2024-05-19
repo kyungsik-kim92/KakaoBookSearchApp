@@ -50,26 +50,17 @@ dependencies {
     implementation(project(":domain"))
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //ktx
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.fragment.ktx)
 
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-    // ViewModelScope
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
 
-    // navigation
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
 
     // Room
     implementation(libs.androidx.room.runtime)
@@ -105,9 +96,5 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     implementation (libs.navigation.compose)
-
-    implementation ("com.google.accompanist:accompanist-pager:0.30.1")
-    implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.1")
-
 
 }
