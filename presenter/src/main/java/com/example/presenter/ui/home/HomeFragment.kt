@@ -1,60 +1,42 @@
 package com.example.presenter.ui.home
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.presenter.R
-import com.example.presenter.adapter.FragmentPagerAdapter
-import com.example.presenter.base.BaseFragment
-import com.example.presenter.base.ViewEvent
-import com.example.presenter.base.ViewState
 import com.example.presenter.databinding.FragmentHomeBinding
-import com.example.presenter.ui.bookmark.BookmarkFragment
-import com.example.presenter.ui.search.SearchFragment
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
+class HomeFragment : Fragment() {
 
-    override val viewModel by viewModels<HomeViewModel>()
+    private lateinit var binding: FragmentHomeBinding
+    private val viewModel by viewModels<HomeViewModel>()
 
-    private val tabConfigurationStrategy =
-        TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-            tab.icon = resources.obtainTypedArray(R.array.array_main_tab_icon).getDrawable(position)
-            tab.text = resources.getStringArray(R.array.array_main_tab_text)[position]
-        }
-
-
-    override fun initUi() {
-
-        val list = listOf(
-            SearchFragment(),
-            BookmarkFragment(),
-
-            )
-        val pageAdapter = FragmentPagerAdapter(list, this)
-
-        with(binding)
-        {
-            viewPager.adapter = pageAdapter
-            TabLayoutMediator(tabLayout, viewPager, tabConfigurationStrategy).attach()
-        }
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.fragment_home, container, false)
+        return binding.root
     }
 
-    override fun onChangedViewState(state: ViewState) {
-
-    }
-
-    override fun onChangeViewEvent(event: ViewEvent) {
-        when (event) {
-            is HomeViewEvent.RouteBookInfo -> {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.containerHome.setContent {
+            HomeScreen(onRouteDetail = { item ->
                 val action =
-                    HomeFragmentDirections.actionHomeFragmentToBookInfoFragment(event.item)
+                    HomeFragmentDirections.actionHomeFragmentToBookInfoFragment(item)
                 findNavController().navigate(action)
-            }
+            })
         }
     }
-
 
 }
