@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
+import com.example.data.mapper.toKakaoBookmark
+import com.example.domain.model.KakaoBook
 import com.example.domain.model.KakaoBookmark
 import com.example.domain.usecase.DeleteBookmarkUseCase
 import com.example.domain.usecase.InsertBookmarkUseCase
@@ -50,14 +52,14 @@ class MainViewModel @Inject constructor(
     private val deleteBookmarkUseCase: DeleteBookmarkUseCase
 ) : BaseViewModel() {
 
-    fun addBookmark(item: KakaoBookmark) = viewModelScope.launch(Dispatchers.IO) {
-        insertBookmarkUseCase(item)
-        onChangedViewEvent(MainViewEvent.AddBookmark(item))
+    fun addBookmark(item: KakaoBook) = viewModelScope.launch(Dispatchers.IO) {
+        insertBookmarkUseCase(item.toKakaoBookmark())
+        onChangedViewEvent(MainViewEvent.AddBookmark(item.toKakaoBookmark()))
     }
 
-    fun deleteBookmark(item: KakaoBookmark) = viewModelScope.launch(Dispatchers.IO) {
-        deleteBookmarkUseCase(item)
-        onChangedViewEvent(MainViewEvent.DeleteBookmark(item))
+    fun deleteBookmark(item: KakaoBook) = viewModelScope.launch(Dispatchers.IO) {
+        deleteBookmarkUseCase(item.toKakaoBookmark())
+        onChangedViewEvent(MainViewEvent.DeleteBookmark(item.toKakaoBookmark()))
     }
 }
 
