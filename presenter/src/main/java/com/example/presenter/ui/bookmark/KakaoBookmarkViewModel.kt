@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class BookmarkViewModel @Inject constructor(private val getFavoriteBookmarkUseCase: GetFavoriteBookmarkUseCase) :
+class KakaoBookmarkViewModel @Inject constructor(private val getFavoriteBookmarkUseCase: GetFavoriteBookmarkUseCase) :
     ViewModel() {
 
     val bookmarkList = getFavoriteBookmarkUseCase().stateIn(

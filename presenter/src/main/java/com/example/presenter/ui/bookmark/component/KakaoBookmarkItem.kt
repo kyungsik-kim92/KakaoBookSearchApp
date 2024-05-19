@@ -27,6 +27,7 @@ fun KakaoBookmarkItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(5.dp)
             .height(100.dp)
     ) {
 
