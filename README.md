@@ -21,4 +21,4 @@ ___
 
 
 ### Project Flow
-![image](https://github.com/kyungsik-kim92/KakaoBookSearchApp/assets/93589990/23584621-6e34-4dc9-8d79-87adcabef0b4)
+![image](https://github.com/kyungsik-kim92/KakaoBookSearchApp/assets/93589990/83dc1ea6-fabe-4b97-a118-cecde78b7e4b)
